@@ -1,0 +1,45 @@
+# Game Settings Configuration
+
+# Display settings
+display:
+  console_width: 100
+  console_height: 35
+  font_size: 12
+  font_path: null  # null = use default tcod font
+  
+# Color scheme
+colors:
+  background: [0, 0, 0]        # black
+  foreground: [255, 255, 255]  # white
+  ui_border: [128, 128, 128]   # gray
+  enemy: [255, 64, 64]         # red
+  player: [64, 255, 64]        # green
+  item: [255, 255, 64]         # yellow
+
+# Input settings  
+input:
+  movement_keys:
+    up: ["k", "Up"]
+    down: ["j", "Down"] 
+    left: ["h", "Left"]
+    right: ["l", "Right"]
+  action_keys:
+    fight: ["f", "F"]
+    defend: ["d", "D"]
+    inventory: ["i", "I"]
+    abilities: ["a", "A"]
+    escape: ["Escape"]
+
+# Game settings
+game:
+  auto_save: true
+  save_slots: 3
+  debug_mode: false
+  verbose_logging: true
+
+# Performance settings
+performance:
+  max_fps: 60
+  enable_vsync: true
+  fov_algorithm: "SHADOW"  # or "BASIC", "DIAMOND"
+  fov_radius: 8
