@@ -5,7 +5,7 @@
 ║  Author        : Eric Acosta ┃ https://github.com/EricA1019                 ║
 ║  Purpose       : Game entry point with registry initialization and testing  ║
 ║  Last-Updated  : 2025-08-04                                                 ║
-║  Version       : v0.0.8                                                     ║
+║  Version       : v0.0.9                                                     ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 """
 
@@ -211,7 +211,7 @@ def test_registries() -> bool:
 
 def main() -> NoReturn:
     """Main entry point for Broken Divinity."""
-    Log.p("Main", ["Starting Broken Divinity ASCII Roguelike v0.0.8"])
+    Log.p("Main", ["Starting Broken Divinity ASCII Roguelike v0.0.9"])
 
     try:
         # Test registry systems

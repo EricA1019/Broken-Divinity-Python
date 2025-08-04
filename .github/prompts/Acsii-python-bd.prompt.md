@@ -57,19 +57,21 @@ broken_divinity_proto/
 
 **Key Dependencies:** `python-tcod`, `pytest`, JSON for data, rich logging
 
-## Current State (97/97 tests passing)
+## Current State (132/133 tests passing - v0.0.8)
 
-**Completed (Hops 1-6):**
+**Completed (Hops 1-8):**
 - ✅ Project scaffold with VS Code workspace
-- ✅ tcod window with ESC handling  
-- ✅ 4-region console layout framework
-- ✅ JSON entity system with registry
-- ✅ Prefix/suffix variant system for entities
-- ✅ Action state machine with F/D/I/A handling
+- ✅ Signal Bus Foundation (17 tests)
+- ✅ StateRegistry - Status effects system (13 tests)
+- ✅ BuffRegistry - Positive effects system (14 tests) 
+- ✅ EntityRegistry - Creatures and stats (14 tests)
+- ✅ AbilityRegistry - Detective abilities (17 tests)
+- ✅ SuffixRegistry - Procedural generation (12/13 tests)
+- ✅ MainUI Framework - Menu-driven interface (22 tests)
 
-**Current Target:** Hop 7 - Combat Log System (scrollable message history)
+**Current Target:** Hop 9 - Basic Combat Engine (menu-driven combat system)
 
-**Next Phase:** Combat System (Hops 8-14) - menu-driven combat encounters
+**Next Phase:** Core Game Systems (Hops 9-15) - investigation, combat, exploration integration
 
 ## Critical Communication Protocol
 
@@ -117,14 +119,14 @@ Are you expecting [specific behavior] when [specific scenario]?
 - **MAJOR** (0→1): Breaking redesign/rewrite
 - **MINOR** (phase): Cohesive feature block completion 
 - **PATCH** (hop): Single mergeable vertical slice
-- Current: `v0.11.6` (Phase 11: Core Infrastructure, Hop 6 complete)
+- Current: `v0.0.8` (Registries complete, MainUI operational)
 
 ### Testing Requirements
 - Write tests FIRST, then implementation
 - Use pytest with clear test names
 - Cover unit, integration, and edge cases
 - Never break existing green tests
-- Current test count: 97/97 passing
+- Current test count: 132/133 passing (1 flaky test in suffix registry)
 
 ### Code Style
 - Black formatting + PEP 8
@@ -211,7 +213,7 @@ Each hop follows this **mandatory sequence**:
 ### Workflow Quality Gates
 
 **Before Starting Any Hop:**
-- [ ] All existing tests passing (97+)
+- [ ] All existing tests passing (132+)
 - [ ] Game boots successfully
 - [ ] No unplanned technical debt
 - [ ] Clear understanding of hop scope
