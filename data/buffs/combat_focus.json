@@ -1,0 +1,12 @@
+{
+    "id": "combat_focus",
+    "name": "Combat Focus",
+    "description": "Increases speed and accuracy in combat",
+    "stat_modifiers": {
+        "speed": 3,
+        "accuracy": 2
+    },
+    "default_duration": 4,
+    "max_stacks": 3,
+    "buff_type": "temporary"
+}

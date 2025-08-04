@@ -1,0 +1,12 @@
+{
+    "id": "rage",
+    "name": "Rage",
+    "description": "Increases attack power but reduces defense",
+    "stat_modifiers": {
+        "attack": 5,
+        "defense": -2
+    },
+    "default_duration": 3,
+    "max_stacks": 2,
+    "buff_type": "temporary"
+}

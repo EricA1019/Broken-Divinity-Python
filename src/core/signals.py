@@ -22,6 +22,11 @@ class CoreSignal(Enum):
     REGISTRY_RELOADED = auto()
     REGISTRY_ERROR = auto()
 
+    # UI Signals
+    UI_ACTION = "ui_action"
+    UI_ACTION_SELECTED = "ui_action_selected"
+    SCREEN_CHANGED = "screen_changed"
+
     # Combat signals
     COMBAT_STARTED = auto()
     COMBAT_ENDED = auto()

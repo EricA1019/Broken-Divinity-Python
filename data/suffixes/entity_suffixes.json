@@ -1,0 +1,89 @@
+{
+  "entity_prefixes": [
+    {
+      "id": "brave",
+      "name": "Brave",
+      "description": "Courageous and fearless in battle",
+      "type": "prefix",
+      "rarity": "common",
+      "stat_modifiers": {
+        "attack": 2,
+        "courage": 5
+      },
+      "restrictions": ["entity"],
+      "weight": 100
+    },
+    {
+      "id": "vile",
+      "name": "Vile",
+      "description": "Corrupted by dark influences",
+      "type": "prefix", 
+      "rarity": "uncommon",
+      "stat_modifiers": {
+        "attack": 1,
+        "corruption": 3,
+        "defense": -1
+      },
+      "special_effects": ["intimidate"],
+      "restrictions": ["entity"],
+      "weight": 60
+    },
+    {
+      "id": "swift",
+      "name": "Swift",
+      "description": "Unnaturally fast and agile",
+      "type": "prefix",
+      "rarity": "common", 
+      "stat_modifiers": {
+        "speed": 3,
+        "dodge": 2
+      },
+      "restrictions": ["entity"],
+      "weight": 80
+    }
+  ],
+  "entity_suffixes": [
+    {
+      "id": "of_blight",
+      "name": "of Blight",
+      "description": "Infused with toxic corruption", 
+      "type": "suffix",
+      "rarity": "uncommon",
+      "stat_modifiers": {
+        "corruption": 4,
+        "poison_resist": 10
+      },
+      "special_effects": ["poison_immunity", "toxic_aura"],
+      "restrictions": ["entity"],
+      "weight": 50
+    },
+    {
+      "id": "of_flame",
+      "name": "of Flame",
+      "description": "Wreathed in eternal fire",
+      "type": "suffix",
+      "rarity": "rare",
+      "stat_modifiers": {
+        "fire_damage": 5,
+        "fire_resist": 15
+      },
+      "special_effects": ["fire_immunity", "burning_weapon"],
+      "restrictions": ["entity"],
+      "weight": 25
+    },
+    {
+      "id": "of_shadows",
+      "name": "of Shadows",
+      "description": "One with the darkness",
+      "type": "suffix", 
+      "rarity": "rare",
+      "stat_modifiers": {
+        "stealth": 8,
+        "dark_damage": 3
+      },
+      "special_effects": ["shadow_step", "darkness_vision"],
+      "restrictions": ["entity"],
+      "weight": 30
+    }
+  ]
+}

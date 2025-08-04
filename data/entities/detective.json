@@ -1,0 +1,15 @@
+{
+  "id": "detective",
+  "name": "Detective",
+  "description": "Experienced investigator with training in combat and investigation. Balanced stats with good mana pool for abilities.",
+  "entity_type": "player",
+  "base_health": 100,
+  "base_attack": 12,
+  "base_defense": 8,
+  "base_speed": 14,
+  "base_mana": 60,
+  "flee_chance": 0.0,
+  "is_boss": false,
+  "is_elite": false,
+  "immunities": []
+}

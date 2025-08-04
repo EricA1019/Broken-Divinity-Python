@@ -1,0 +1,8 @@
+{
+    "id": "poison",
+    "name": "Poisoned",
+    "description": "Taking poison damage over time",
+    "default_duration": 4,
+    "max_stacks": 3,
+    "conflicts": []
+}

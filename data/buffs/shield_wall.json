@@ -1,0 +1,12 @@
+{
+    "id": "shield_wall",
+    "name": "Shield Wall",
+    "description": "Greatly increases defense while reducing movement",
+    "stat_modifiers": {
+        "defense": 8,
+        "speed": -3
+    },
+    "default_duration": 5,
+    "max_stacks": 1,
+    "buff_type": "temporary"
+}

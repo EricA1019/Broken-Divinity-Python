@@ -166,6 +166,93 @@ Are you expecting [specific behavior] when [specific scenario]?
 - Scrollable combat log shows all actions/results
 - Data-driven content allows easy expansion
 
+## Detailed Development Workflow
+
+### Standard Hop Workflow (Close-to-Shore Method)
+
+Each hop follows this **mandatory sequence**:
+
+#### Phase 1: Hop Planning & Setup
+1. **Read ROADMAP.md** - Understand current hop requirements
+2. **Check systemupkeep.md** - Review active signals/APIs 
+3. **Run full test suite** - Ensure starting from green state
+4. **Configure environment** - Set up venv if needed
+5. **Ask clarifying questions** - Use numbered format when unclear
+
+#### Phase 2: Test-First Implementation
+1. **Write failing tests** - Cover all hop requirements
+2. **Implement minimal code** - Make tests pass incrementally
+3. **Run tests frequently** - Keep feedback loop tight
+4. **Test game launch** - Verify `python -m src.main` works after each green test
+5. **Fix issues immediately** - Never continue with red tests
+6. **Refactor with green tests** - Improve code quality safely
+
+#### Phase 3: Integration & Validation
+1. **Full test suite** - Ensure no regressions (70+ tests)
+2. **Boot game manually** - Verify `python -m src.main` works and shows new features
+3. **Check error logs** - No unexpected warnings/errors
+4. **Manual feature testing** - Verify hop works as intended
+5. **Performance check** - Ensure no significant slowdowns
+
+#### Phase 4: Documentation & Commit
+1. **Update ROADMAP.md** - Mark hop complete, set next target
+2. **Update systemupkeep.md** - Document new signals/APIs
+3. **Write clear commit message** - Summarize what was accomplished
+4. **Tag version** - Follow semver (v0.phase.hop)
+5. **Push to repository** - Share progress
+
+#### Phase 5: Workflow Improvement Review
+1. **Capture lessons learned** - What worked well/poorly?
+2. **Identify bottlenecks** - Where did development slow down?
+3. **Note tool gaps** - What tools would have helped?
+4. **Document improvements** - Add to workflow improvement log
+5. **Update prompt if needed** - Evolve development process
+
+### Workflow Quality Gates
+
+**Before Starting Any Hop:**
+- [ ] All existing tests passing (97+)
+- [ ] Game boots successfully
+- [ ] No unplanned technical debt
+- [ ] Clear understanding of hop scope
+- [ ] Adequate time allocated
+
+**During Hop Development:**
+- [ ] Tests written before implementation
+- [ ] Regular test runs (every 15-30 minutes)
+- [ ] Immediate issue resolution
+- [ ] Incremental commits
+- [ ] Clear progress tracking
+
+**Before Completing Any Hop:**
+- [ ] All tests pass (no red tests)
+- [ ] Game boots cleanly
+- [ ] Feature works as specified
+- [ ] Documentation updated
+- [ ] Code follows style guide
+
+### Communication Protocol Integration
+
+**When to Use Numbered Questions:**
+- Hop scope interpretation
+- Technical approach choices
+- Architecture decisions
+- User requirement clarification
+- Feature behavior specifications
+
+**Question Format Example:**
+```
+## Clarification Questions:
+
+**1. [Scope] Question:**
+Should this hop include [specific feature] or save for next hop?
+
+**2. [Technical] Question:**  
+Should [implementation] use [approach A] or [approach B]?
+
+**Answer with: 1.yes/no 2.a/b**
+```
+
 ## Error Recovery & Quality Assurance
 
 - If tests fail, immediately investigate and fix
@@ -181,6 +268,7 @@ Are you expecting [specific behavior] when [specific scenario]?
 3. **Maintainable:** Code follows standards, has tests
 4. **Documented:** ROADMAP.md updated, clear commit message
 5. **Aligned:** User confirms feature matches their vision
+6. **Improved:** Workflow lessons captured and applied
 
 ---
 

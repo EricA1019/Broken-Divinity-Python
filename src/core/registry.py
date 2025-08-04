@@ -152,38 +152,57 @@ class BaseRegistry(ABC, Generic[T]):
 
         # Handle different JSON structures
         if isinstance(data, dict):
-            # Look for arrays of items
-            for key, value in data.items():
-                if isinstance(value, list):
-                    for item_data in value:
-                        if isinstance(item_data, dict):
-                            try:
-                                item = self._load_item_from_dict(item_data)
-                                item_id = self._get_item_id(item)
-                                self._data[item_id] = item
-                                loaded_count += 1
-                            except Exception as e:
-                                Log.p(
-                                    f"{self.registry_name}Reg",
-                                    [
-                                        "ERROR loading item from",
-                                        str(file_path),
-                                        ":",
-                                        str(e),
-                                    ],
-                                )
-                elif isinstance(value, dict):
-                    # Single item
-                    try:
-                        item = self._load_item_from_dict(value)
-                        item_id = self._get_item_id(item)
-                        self._data[item_id] = item
-                        loaded_count += 1
-                    except Exception as e:
-                        Log.p(
-                            f"{self.registry_name}Reg",
-                            ["ERROR loading item from", str(file_path), ":", str(e)],
-                        )
+            # Check if the root dict itself is an item (has an 'id' field)
+            if "id" in data:
+                # Single item as root object
+                try:
+                    item = self._load_item_from_dict(data)
+                    item_id = self._get_item_id(item)
+                    self._data[item_id] = item
+                    loaded_count += 1
+                except Exception as e:
+                    Log.p(
+                        f"{self.registry_name}Reg",
+                        ["ERROR loading item from", str(file_path), ":", str(e)],
+                    )
+            else:
+                # Look for arrays of items or nested items
+                for key, value in data.items():
+                    if isinstance(value, list):
+                        for item_data in value:
+                            if isinstance(item_data, dict):
+                                try:
+                                    item = self._load_item_from_dict(item_data)
+                                    item_id = self._get_item_id(item)
+                                    self._data[item_id] = item
+                                    loaded_count += 1
+                                except Exception as e:
+                                    Log.p(
+                                        f"{self.registry_name}Reg",
+                                        [
+                                            "ERROR loading item from",
+                                            str(file_path),
+                                            ":",
+                                            str(e),
+                                        ],
+                                    )
+                    elif isinstance(value, dict):
+                        # Single item
+                        try:
+                            item = self._load_item_from_dict(value)
+                            item_id = self._get_item_id(item)
+                            self._data[item_id] = item
+                            loaded_count += 1
+                        except Exception as e:
+                            Log.p(
+                                f"{self.registry_name}Reg",
+                                [
+                                    "ERROR loading item from",
+                                    str(file_path),
+                                    ":",
+                                    str(e),
+                                ],
+                            )
         elif isinstance(data, list):
             # Direct array of items
             for item_data in data:

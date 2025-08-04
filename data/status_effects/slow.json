@@ -1,0 +1,8 @@
+{
+    "id": "slow",
+    "name": "Slowed",
+    "description": "Reduced movement and action speed",
+    "default_duration": 3,
+    "max_stacks": 1,
+    "conflicts": ["haste"]
+}

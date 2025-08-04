@@ -1,0 +1,60 @@
+{
+  "weapon_prefixes": [
+    {
+      "id": "sharp",
+      "name": "Sharp",
+      "description": "Honed to a razor edge",
+      "type": "prefix",
+      "rarity": "common",
+      "stat_modifiers": {
+        "attack": 1,
+        "accuracy": 5
+      },
+      "restrictions": ["weapon"],
+      "weight": 90
+    },
+    {
+      "id": "blessed",
+      "name": "Blessed",
+      "description": "Sanctified by divine power", 
+      "type": "prefix",
+      "rarity": "rare",
+      "stat_modifiers": {
+        "holy_damage": 4,
+        "accuracy": 3
+      },
+      "special_effects": ["consecrated", "undead_bane"],
+      "restrictions": ["weapon"],
+      "weight": 20
+    }
+  ],
+  "weapon_suffixes": [
+    {
+      "id": "of_piercing",
+      "name": "of Piercing", 
+      "description": "Cuts through armor with ease",
+      "type": "suffix",
+      "rarity": "uncommon",
+      "stat_modifiers": {
+        "armor_pen": 3,
+        "critical_chance": 5
+      },
+      "restrictions": ["weapon"],
+      "weight": 40
+    },
+    {
+      "id": "of_storms",
+      "name": "of Storms",
+      "description": "Crackling with lightning energy",
+      "type": "suffix",
+      "rarity": "legendary", 
+      "stat_modifiers": {
+        "lightning_damage": 8,
+        "chain_chance": 15
+      },
+      "special_effects": ["chain_lightning", "static_charge"],
+      "restrictions": ["weapon"],
+      "weight": 5
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "corrupt_officer",
+  "name": "Corrupt Police Officer",
+  "description": "Former law enforcement turned to crime. Well-trained with balanced stats and some mana.",
+  "entity_type": "elite",
+  "base_health": 100,
+  "base_attack": 14,
+  "base_defense": 12,
+  "base_speed": 11,
+  "base_mana": 30,
+  "flee_chance": 0.2,
+  "is_boss": false,
+  "is_elite": true,
+  "immunities": []
+}

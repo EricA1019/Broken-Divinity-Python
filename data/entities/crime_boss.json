@@ -1,0 +1,15 @@
+{
+  "id": "crime_boss",
+  "name": "Crime Boss",
+  "description": "Powerful criminal mastermind with extensive resources. High health and multiple immunities.",
+  "entity_type": "boss",
+  "base_health": 300,
+  "base_attack": 22,
+  "base_defense": 18,
+  "base_speed": 10,
+  "base_mana": 50,
+  "flee_chance": 0.0,
+  "is_boss": true,
+  "is_elite": false,
+  "immunities": ["stun", "poison"]
+}

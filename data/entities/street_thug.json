@@ -1,0 +1,15 @@
+{
+  "id": "street_thug",
+  "name": "Street Thug",
+  "description": "Common criminal with basic combat skills. Low health but unpredictable.",
+  "entity_type": "normal",
+  "base_health": 60,
+  "base_attack": 8,
+  "base_defense": 5,
+  "base_speed": 12,
+  "base_mana": 0,
+  "flee_chance": 0.3,
+  "is_boss": false,
+  "is_elite": false,
+  "immunities": []
+}

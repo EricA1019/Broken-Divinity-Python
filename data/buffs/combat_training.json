@@ -1,0 +1,11 @@
+{
+    "id": "combat_training",
+    "name": "Combat Training",
+    "description": "Permanent improvement from extensive training",
+    "stat_modifiers": {
+        "attack": 2,
+        "defense": 1
+    },
+    "buff_type": "permanent",
+    "is_permanent": true
+}

@@ -1,0 +1,14 @@
+{
+    "id": "blessing",
+    "name": "Divine Blessing",
+    "description": "A blessing that improves all abilities",
+    "stat_modifiers": {
+        "attack": 1,
+        "defense": 1,
+        "speed": 1,
+        "health": 5
+    },
+    "default_duration": 10,
+    "max_stacks": 1,
+    "buff_type": "temporary"
+}
