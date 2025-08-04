@@ -1,0 +1,86 @@
+{
+  "detective_abilities": [
+    {
+      "id": "snap_shot",
+      "name": "Snap Shot",
+      "description": "Quick pistol shot with standard accuracy",
+      "type": "attack",
+      "damage_type": "ballistic",
+      "cost": {
+        "ammo": 1,
+        "mana": 0
+      },
+      "cooldown": 0,
+      "range": 3,
+      "targeting": "single",
+      "effects": {
+        "base_damage": [2, 4],
+        "accuracy_modifier": 0
+      },
+      "animation": "pistol_fire",
+      "sound": "gunshot"
+    },
+    {
+      "id": "aimed_shot",
+      "name": "Aimed Shot", 
+      "description": "Carefully aimed shot with increased accuracy and damage",
+      "type": "attack",
+      "damage_type": "ballistic",
+      "cost": {
+        "ammo": 2,
+        "mana": 0
+      },
+      "cooldown": 2,
+      "range": 4,
+      "targeting": "single",
+      "effects": {
+        "base_damage": [3, 6],
+        "accuracy_modifier": 2,
+        "critical_chance": 0.15
+      },
+      "animation": "aimed_shot",
+      "sound": "precise_gunshot"
+    },
+    {
+      "id": "patch_up",
+      "name": "Patch Up",
+      "description": "Quick field medical treatment to restore health",
+      "type": "heal",
+      "damage_type": "none",
+      "cost": {
+        "ammo": 0,
+        "mana": 1
+      },
+      "cooldown": 3,
+      "range": 1,
+      "targeting": "self_or_ally",
+      "effects": {
+        "heal_amount": [8, 12],
+        "removes_bleeding": true
+      },
+      "animation": "medical_kit",
+      "sound": "bandage"
+    },
+    {
+      "id": "take_cover",
+      "name": "Take Cover",
+      "description": "Defensive position that increases defense until next turn",
+      "type": "defense",
+      "damage_type": "none",
+      "cost": {
+        "ammo": 0,
+        "mana": 0
+      },
+      "cooldown": 1,
+      "range": 0,
+      "targeting": "self",
+      "effects": {
+        "defense_bonus": 3,
+        "duration": 1,
+        "blocks_movement": false
+      },
+      "animation": "take_cover",
+      "sound": "defensive_stance"
+    }
+  ]
+}
