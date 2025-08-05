@@ -1,6 +1,7 @@
 {
     "id": "slow",
-    "name": "Slowed",
+    "name": "slow",
+    "display_name": "Slowed",
     "description": "Reduced movement and action speed",
     "default_duration": 3,
     "max_stacks": 1,

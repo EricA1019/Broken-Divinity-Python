@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Character Background Schema",
+  "description": "Schema for character background JSON files",
+  "type": "object",
+  "required": ["id", "name", "display_name", "description"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the background",
+      "pattern": "^[a-z_]+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Internal name for the background"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Human-readable name shown to player"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the background"
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Atmospheric description for character creation"
+    },
+    "stat_modifiers": {
+      "type": "object",
+      "description": "Starting stat modifications",
+      "properties": {
+        "health": {"type": "integer"},
+        "mana": {"type": "integer"},
+        "stamina": {"type": "integer"},
+        "strength": {"type": "integer"},
+        "dexterity": {"type": "integer"},
+        "intelligence": {"type": "integer"},
+        "perception": {"type": "integer"},
+        "charisma": {"type": "integer"}
+      },
+      "additionalProperties": false
+    },
+    "starting_items": {
+      "type": "array",
+      "description": "Items the character starts with",
+      "items": {
+        "type": "string"
+      }
+    },
+    "starting_abilities": {
+      "type": "array",
+      "description": "Abilities the character knows from the start",
+      "items": {
+        "type": "string"
+      }
+    },
+    "starting_status_effects": {
+      "type": "array",
+      "description": "Status effects applied at character creation",
+      "items": {
+        "type": "string"
+      }
+    },
+    "background_skills": {
+      "type": "array",
+      "description": "Special background-related skills or knowledge",
+      "items": {
+        "type": "object",
+        "required": ["name", "description"],
+        "properties": {
+          "name": {"type": "string"},
+          "description": {"type": "string"},
+          "mechanical_effect": {"type": "string"}
+        }
+      }
+    },
+    "personality_traits": {
+      "type": "array",
+      "description": "Suggested personality traits for this background",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dialogue_options": {
+      "type": "object",
+      "description": "Special dialogue unlocked by this background",
+      "properties": {
+        "investigation": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "social": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "combat": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

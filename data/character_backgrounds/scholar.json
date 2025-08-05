@@ -1,0 +1,63 @@
+{
+  "id": "scholar",
+  "name": "scholar",
+  "display_name": "Scholar",
+  "description": "An academic who studied divine theology and now seeks to understand the cosmic implications of the assassination.",
+  "flavor_text": "Your life was spent in libraries and lecture halls, studying the divine mysteries that most took for granted. When Yahweh fell, you lost your faith but gained terrible knowledge. You understand the theological implications better than anyone - and that knowledge terrifies you.",
+  "stat_modifiers": {
+    "intelligence": 3,
+    "mana": 2,
+    "perception": 1,
+    "strength": -2,
+    "stamina": -1
+  },
+  "starting_items": [
+    "divine_texts",
+    "research_notes",
+    "magnifying_glass",
+    "ancient_tome"
+  ],
+  "starting_abilities": [
+    "analyze_divine",
+    "research_lore",
+    "divine_insight"
+  ],
+  "starting_status_effects": [
+    "existential_dread"
+  ],
+  "background_skills": [
+    {
+      "name": "Theological Knowledge",
+      "description": "Deep understanding of divine hierarchy and cosmic order",
+      "mechanical_effect": "Identify divine artifacts and understand cosmic events"
+    },
+    {
+      "name": "Research Methodology",
+      "description": "Systematic approach to gathering and analyzing information",
+      "mechanical_effect": "Gain additional clues when investigating divine mysteries"
+    }
+  ],
+  "personality_traits": [
+    "Intellectual and analytical",
+    "Haunted by cosmic knowledge",
+    "Seeks truth above comfort",
+    "Struggles with loss of faith"
+  ],
+  "dialogue_options": {
+    "investigation": [
+      "The theological implications are staggering.",
+      "This contradicts everything we thought we knew.",
+      "There are patterns here that others miss."
+    ],
+    "social": [
+      "Let me explain what this really means.",
+      "Knowledge is our only weapon now.",
+      "The old certainties are gone forever."
+    ],
+    "combat": [
+      "I understand the cosmic forces at work here.",
+      "Knowledge is power, literally.",
+      "The divine texts speak of this moment."
+    ]
+  }
+}

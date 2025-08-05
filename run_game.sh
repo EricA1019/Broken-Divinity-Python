@@ -3,6 +3,9 @@
 cd "$(dirname "$0")"
 echo "🎮 Launching Broken Divinity..."
 
+# Remove the dummy driver to enable graphical window
+# export SDL_VIDEODRIVER=dummy
+
 # Activate virtual environment if it exists
 if [ -d ".venv" ]; then
     source .venv/bin/activate

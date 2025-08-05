@@ -1,0 +1,137 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Status Effect Schema",
+  "description": "Schema for status effect JSON files",
+  "type": "object",
+  "required": ["id", "name", "display_name"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the status effect",
+      "pattern": "^[a-z_]+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Internal name for the status effect"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Human-readable name shown to player"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the effect"
+    },
+    "effect_type": {
+      "type": "string",
+      "enum": ["buff", "debuff", "neutral", "stat_modifier", "damage_over_time"],
+      "description": "Category of status effect"
+    },
+    "duration_hours": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Duration in hours (0 = permanent)"
+    },
+    "duration_minutes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 59,
+      "description": "Additional duration in minutes"
+    },
+    "default_duration": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Default duration in minutes"
+    },
+    "max_stacks": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Maximum number of stacks allowed"
+    },
+    "conflicts": {
+      "type": "array",
+      "description": "Status effects that conflict with this one",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stat_changes": {
+      "type": "object",
+      "description": "Stat modifications applied by this effect",
+      "properties": {
+        "health": {"type": "integer"},
+        "mana": {"type": "integer"},
+        "stamina": {"type": "integer"},
+        "strength": {"type": "integer"},
+        "dexterity": {"type": "integer"},
+        "intelligence": {"type": "integer"},
+        "perception": {"type": "integer"},
+        "charisma": {"type": "integer"},
+        "attack": {"type": "integer"},
+        "defense": {"type": "integer"},
+        "speed": {"type": "integer"}
+      },
+      "additionalProperties": false
+    },
+    "stat_modifiers": {
+      "type": "object",
+      "description": "Alternative stat modification format",
+      "additionalProperties": {"type": "integer"}
+    },
+    "damage_over_time": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Damage dealt each turn"
+    },
+    "effects": {
+      "type": "array",
+      "description": "List of effect triggers",
+      "items": {
+        "type": "object",
+        "required": ["trigger", "effect"],
+        "properties": {
+          "trigger": {
+            "type": "string",
+            "enum": ["on_apply", "on_remove", "per_turn", "per_hour"]
+          },
+          "effect": {
+            "type": "object",
+            "description": "Effect definition"
+          }
+        }
+      }
+    },
+    "stackable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether multiple instances can be applied"
+    },
+    "removable": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the effect can be manually removed"
+    },
+    "duration": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Duration in turns or minutes"
+    },
+    "stacks": {
+      "oneOf": [
+        {"type": "integer", "minimum": 0},
+        {"type": "boolean"}
+      ],
+      "description": "Current number of stacks or whether stackable"
+    },
+    "visual_indicator": {
+      "type": "string",
+      "description": "Visual representation of the effect"
+    },
+    "damage_per_turn": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Damage dealt each turn"
+    }
+  },
+  "additionalProperties": false
+}

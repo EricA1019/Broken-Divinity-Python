@@ -203,7 +203,7 @@ class TestInfernalAbilities:
 
         effect = registry.get_item("burn")
         assert effect is not None
-        assert effect.name == "Burning"
+        assert effect.display_name == "Burning"
 
     def test_weakness_status_effect_loaded(self):
         """Test weakness status effect loads correctly."""
@@ -215,7 +215,7 @@ class TestInfernalAbilities:
 
         effect = registry.get_item("weakness")
         assert effect is not None
-        assert effect.name == "Weakened"
+        assert effect.display_name == "Weakened"
 
     def test_evasion_buff_loaded(self):
         """Test evasion buff loads correctly."""
@@ -227,7 +227,7 @@ class TestInfernalAbilities:
 
         buff = registry.get_item("evasion")
         assert buff is not None
-        assert buff.name == "Evasive"
+        assert buff.display_name == "Evasive"
 
 
 class TestCombatScreenEnhanced:

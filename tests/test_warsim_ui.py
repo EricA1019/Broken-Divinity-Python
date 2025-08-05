@@ -124,7 +124,8 @@ class TestMenuScreen:
         assert fight_option is not None
         assert fight_option.action == "combat_fight"
 
-        settings_option = screen.get_option("9")
+        # With expandable menu system, keys are reassigned 1, 2, 3 for the first page
+        settings_option = screen.get_option("3")  # Was "9", now reassigned to "3"
         assert settings_option is not None
         assert settings_option.action == "open_settings"
 
@@ -220,7 +221,9 @@ class TestMainUI:
     def test_ui_initialization(self):
         """Test UI framework initialization."""
         ui = MainUI()
-        assert ui.current_screen is None
+        # Main menu is now automatically set as the entry point
+        assert ui.current_screen is not None
+        assert ui.current_screen.title == "Broken Divinity - Main Menu"
         assert ui.status_data is not None
 
     def test_ui_with_config(self):

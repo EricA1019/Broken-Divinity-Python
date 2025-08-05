@@ -1,4 +1,5 @@
 {
+  "id": "burn",
   "name": "burn",
   "display_name": "Burning",
   "description": "Takes fire damage each turn.",

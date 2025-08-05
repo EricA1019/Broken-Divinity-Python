@@ -1,6 +1,7 @@
 {
     "id": "poison",
-    "name": "Poisoned",
+    "name": "poison",
+    "display_name": "Poisoned",
     "description": "Taking poison damage over time",
     "default_duration": 4,
     "max_stacks": 3,

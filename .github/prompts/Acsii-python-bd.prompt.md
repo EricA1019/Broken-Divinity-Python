@@ -19,11 +19,14 @@ Follow these **non-negotiable principles**:
   - ✅ Git commit + version tag
 
 ### 2. Data-Driven Everything
-- Content lives in JSON/YAML files in `data/` folders
-- Systems **discover** content via recursive folder scans
-- Registries cache content by `name` key
-- **NO HARD-CODING** - prefer tables & registries over `if/elif` chains
-- Auto-populated UI containers read data and spawn controls automatically
+- **SQLite database is the primary data store** for all game content and save data
+- **JSON files are for testing and development** before committing to database
+- **Registries provide unified API** for both SQLite and JSON data sources
+- **Systems cache content by `name` key** with relational query capabilities
+- **NO HARD-CODING** - prefer database tables & registries over `if/elif` chains
+- **Auto-populated UI containers** read data and spawn controls automatically
+- **SQLite enables complex relationships** and efficient queries for massive content
+- **Development workflow:** JSON → Test → Validate → Migrate to SQLite → Commit
 
 ### 3. Loud, Tagged Logging
 - Use `logging.getLogger("[SystemTag]")` for all systems
@@ -46,20 +49,22 @@ broken_divinity_proto/
 │   ├── main.py              # Entry point with state machine
 │   ├── ui/                  # Console, layout, panels
 │   ├── game/                # Entities, state machine, combat
+│   ├── data/                # Database layer, SQLite backend, migrations
 │   └── utils/               # Logging, helpers
 ├── data/
-│   ├── entities/            # JSON entity definitions
-│   ├── modifiers/           # JSON prefix/suffix modifiers
-│   └── locations/           # JSON location data (future)
+│   ├── game.db              # SQLite database (primary data store)
+│   ├── migrations/          # Database schema migrations
+│   ├── backup/              # JSON exports and backups
+│   └── test_data/           # JSON files for testing before DB commit
 ├── tests/                   # Permanent pytest suites
-└── Documentation/           # ROADMAP.md and design docs
+└── Documentation/           # ROADMAP.md, database_schema.md, design docs
 ```
 
-**Key Dependencies:** `python-tcod`, `pytest`, JSON for data, rich logging
+**Key Dependencies:** `python-tcod`, `pytest`, SQLite for data (primary), JSON for testing/development, rich logging
 
-## Current State (132/133 tests passing - v0.0.8)
+## Current State (38+ tests passing - v0.0.12)
 
-**Completed (Hops 1-8):**
+**Completed (Hops 1-12):**
 - ✅ Project scaffold with VS Code workspace
 - ✅ Signal Bus Foundation (17 tests)
 - ✅ StateRegistry - Status effects system (13 tests)
@@ -68,10 +73,14 @@ broken_divinity_proto/
 - ✅ AbilityRegistry - Detective abilities (17 tests)
 - ✅ SuffixRegistry - Procedural generation (12/13 tests)
 - ✅ MainUI Framework - Menu-driven interface (22 tests)
+- ✅ Enhanced Testing Strategy - Multi-layered validation (15+ tests)
+- ✅ Data-Driven Apartment Screen - JSON-based location system (5+ tests)
+- ✅ Game Flow Integration Tests - Screen transition validation (3+ tests)
+- ✅ SQLite Data Layer Foundation - Database backend with migration tools (37/38 tests)
 
-**Current Target:** Hop 9 - Basic Combat Engine (menu-driven combat system)
+**Current Target:** Hop 13 - Registry SQLite Integration
 
-**Next Phase:** Core Game Systems (Hops 9-15) - investigation, combat, exploration integration
+**Next Phase:** SQLite Integration (Hops 13-18) - registry adaptation, advanced queries, performance optimization
 
 ## Critical Communication Protocol
 
@@ -124,9 +133,11 @@ Are you expecting [specific behavior] when [specific scenario]?
 ### Testing Requirements
 - Write tests FIRST, then implementation
 - Use pytest with clear test names
-- Cover unit, integration, and edge cases
+- Cover unit, integration, smoke, and game flow tests
+- Include JSON schema validation for all data files
+- Mandatory player-driven testing for each hop
 - Never break existing green tests
-- Current test count: 132/133 passing (1 flaky test in suffix registry)
+- Current test count: 133+ passing across all test categories
 
 ### Code Style
 - Black formatting + PEP 8
@@ -177,33 +188,51 @@ Each hop follows this **mandatory sequence**:
 #### Phase 1: Hop Planning & Setup
 1. **Read ROADMAP.md** - Understand current hop requirements
 2. **Check systemupkeep.md** - Review active signals/APIs 
-3. **Run full test suite** - Ensure starting from green state
-4. **Configure environment** - Set up venv if needed
-5. **Ask clarifying questions** - Use numbered format when unclear
+3. **Run full test suite** - Ensure starting from green state (`make test-pre-commit`)
+4. **Validate JSON schemas** - Ensure all data files conform (`make validate-schemas`)
+5. **Boot test** - Verify game starts cleanly (`make validate-boot`)
+6. **Configure environment** - Set up venv if needed
+7. **Ask clarifying questions** - Use numbered format when unclear
 
-#### Phase 2: Test-First Implementation
-1. **Write failing tests** - Cover all hop requirements
-2. **Implement minimal code** - Make tests pass incrementally
-3. **Run tests frequently** - Keep feedback loop tight
-4. **Test game launch** - Verify `python -m src.main` works after each green test
-5. **Fix issues immediately** - Never continue with red tests
-6. **Refactor with green tests** - Improve code quality safely
+#### Phase 2: Enhanced Test-First Implementation
+1. **Write failing unit tests** - Cover all new components and functions
+2. **Write failing integration tests** - Cover system interactions
+3. **Write failing game flow tests** - Cover complete user workflows
+4. **Create/update JSON schemas** - For any new data structures
+5. **Implement minimal code** - Make tests pass incrementally
+6. **Run tests frequently** - Keep feedback loop tight (every 15-30 minutes)
+7. **Fix issues immediately** - Never continue with red tests
+8. **Refactor with green tests** - Improve code quality safely
 
-#### Phase 3: Integration & Validation
-1. **Full test suite** - Ensure no regressions (70+ tests)
-2. **Boot game manually** - Verify `python -m src.main` works and shows new features
-3. **Check error logs** - No unexpected warnings/errors
-4. **Manual feature testing** - Verify hop works as intended
-5. **Performance check** - Ensure no significant slowdowns
+#### Phase 3: Comprehensive Integration & Validation
+1. **Full unit test suite** - All component tests pass
+2. **Full integration test suite** - All system interaction tests pass
+3. **Smoke tests** - All critical path tests pass
+4. **Game flow tests** - All user journey tests pass
+5. **JSON validation suite** - All data files pass schema validation
+6. **Boot game manually** - Verify `python -m src.main` works and shows new features
+7. **Check error logs** - No unexpected warnings/errors
+8. **Manual feature testing** - Verify hop works as intended
+9. **Performance check** - Ensure no significant slowdowns
 
-#### Phase 4: Documentation & Commit
+#### Phase 4: Player Experience Validation
+1. **Human gameplay test** - Developer/tester plays through new features
+2. **Follow Player Test Protocol** - Complete validation phases A, B, and C
+3. **Document player experience** - Create playtest report in `docs/playtests/`
+4. **Note confusing or broken interactions** - Record UX issues
+5. **Iterate on UX issues** - Fix gameplay flow problems
+6. **Verify story progression** - New content fits narrative context
+
+#### Phase 5: Documentation & Commit
 1. **Update ROADMAP.md** - Mark hop complete, set next target
 2. **Update systemupkeep.md** - Document new signals/APIs
-3. **Write clear commit message** - Summarize what was accomplished
-4. **Tag version** - Follow semver (v0.phase.hop)
-5. **Push to repository** - Share progress
+3. **Update schema documentation** - Document any new JSON schemas added
+4. **Write clear commit message** - Summarize what was accomplished
+5. **Run final test suite** - One last verification everything works
+6. **Tag version** - Follow semver (v0.phase.hop)
+7. **Push to repository** - Share progress (mandatory for phase tags)
 
-#### Phase 5: Workflow Improvement Review
+#### Phase 6: Workflow Improvement Review
 1. **Capture lessons learned** - What worked well/poorly?
 2. **Identify bottlenecks** - Where did development slow down?
 3. **Note tool gaps** - What tools would have helped?
@@ -213,25 +242,37 @@ Each hop follows this **mandatory sequence**:
 ### Workflow Quality Gates
 
 **Before Starting Any Hop:**
-- [ ] All existing tests passing (132+)
-- [ ] Game boots successfully
+- [ ] All existing tests passing (133+ unit, integration, smoke, game_flow)
+- [ ] All JSON files pass schema validation
+- [ ] Game boots successfully and completes boot test
 - [ ] No unplanned technical debt
 - [ ] Clear understanding of hop scope
+- [ ] Previous hop's player testing documented
 - [ ] Adequate time allocated
 
 **During Hop Development:**
-- [ ] Tests written before implementation
+- [ ] Unit tests written before implementation
+- [ ] Integration tests cover system interactions
+- [ ] Game flow tests cover user journeys
+- [ ] JSON validation passing continuously
 - [ ] Regular test runs (every 15-30 minutes)
 - [ ] Immediate issue resolution
-- [ ] Incremental commits
+- [ ] Incremental commits with green tests
 - [ ] Clear progress tracking
 
 **Before Completing Any Hop:**
-- [ ] All tests pass (no red tests)
-- [ ] Game boots cleanly
+- [ ] All unit tests pass (no red tests)
+- [ ] All integration tests pass
+- [ ] All smoke tests pass
+- [ ] All game flow tests pass
+- [ ] All JSON validation passes
+- [ ] Game boots cleanly and shows new features
+- [ ] Player can access and experience new feature
+- [ ] Player testing completed and documented
 - [ ] Feature works as specified
-- [ ] Documentation updated
+- [ ] Documentation updated (README.md, ROADMAP.md)
 - [ ] Code follows style guide
+- [ ] Performance acceptable (no significant slowdowns)
 
 ### Communication Protocol Integration
 

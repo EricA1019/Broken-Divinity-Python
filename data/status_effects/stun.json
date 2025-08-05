@@ -1,6 +1,7 @@
 {
     "id": "stun",
-    "name": "Stunned",
+    "name": "stun",
+    "display_name": "Stunned",
     "description": "Unable to take actions",
     "default_duration": 2,
     "max_stacks": 1,

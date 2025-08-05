@@ -1,6 +1,7 @@
 {
     "id": "haste",
-    "name": "Hastened",
+    "name": "haste",
+    "display_name": "Hastened",
     "description": "Increased movement and action speed",
     "default_duration": 3,
     "max_stacks": 1,

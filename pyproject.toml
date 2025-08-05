@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "broken-divinity"
-version = "0.0.2"
+version = "0.0.11"
 description = "A classic ASCII roguelike implementation of Broken Divinity"
 readme = "README.md"
 requires-python = ">=3.8"

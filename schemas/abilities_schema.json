@@ -1,0 +1,155 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ability Schema",
+  "description": "Schema for ability JSON files",
+  "oneOf": [
+    {
+      "type": "object",
+      "description": "Single ability file",
+      "required": ["id", "name", "type"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the ability",
+          "pattern": "^[a-z_]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name for the ability"
+        },
+        "display_name": {
+          "type": "string",
+          "description": "Display name shown to player"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the ability"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["attack", "defense", "utility", "passive", "heal"],
+          "description": "Category of ability"
+        },
+        "damage_type": {
+          "type": "string",
+          "enum": ["physical", "magical", "psychic", "social", "dark", "ballistic", "fire", "ice", "lightning", "infernal", "none"],
+          "description": "Type of damage dealt"
+        },
+        "cost": {
+          "type": "object",
+          "description": "Resource costs to use the ability",
+          "properties": {
+            "mana": {"type": "integer", "minimum": 0},
+            "stamina": {"type": "integer", "minimum": 0},
+            "health": {"type": "integer", "minimum": 0},
+            "ammo": {"type": "integer", "minimum": 0}
+          },
+          "additionalProperties": false
+        },
+        "cooldown": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Turns before ability can be used again"
+        },
+        "range": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum range in game units"
+        },
+        "targeting": {
+          "type": "string",
+          "enum": ["self", "single", "area", "all_enemies", "all_allies", "self_or_ally"],
+          "description": "Valid targets for the ability"
+        },
+        "effects": {
+          "type": "object",
+          "description": "Effects applied by the ability",
+          "properties": {
+            "status_effects": {
+              "type": "array",
+              "items": {"type": "string"}
+            },
+            "damage": {
+              "type": "object",
+              "properties": {
+                "base": {"type": "integer"},
+                "dice": {"type": "string"}
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "description": "Collection of abilities",
+      "patternProperties": {
+        "^[a-z_]+_abilities$": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "type"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z_]+$"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["attack", "defense", "utility", "passive", "heal"]
+              },
+              "damage_type": {
+                "type": "string",
+                "enum": ["physical", "magical", "psychic", "social", "dark", "ballistic", "fire", "ice", "lightning", "infernal", "none"]
+              },
+              "cost": {
+                "type": "object",
+                "properties": {
+                  "mana": {"type": "integer", "minimum": 0},
+                  "stamina": {"type": "integer", "minimum": 0},
+                  "health": {"type": "integer", "minimum": 0},
+                  "ammo": {"type": "integer", "minimum": 0}
+                },
+                "additionalProperties": false
+              },
+              "cooldown": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "range": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "targeting": {
+                "type": "string",
+                "enum": ["self", "single", "area", "all_enemies", "all_allies", "self_or_ally"]
+              },
+              "effects": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "animation": {
+                "type": "string",
+                "description": "Animation to play when using ability"
+              },
+              "sound": {
+                "type": "string",
+                "description": "Sound effect to play when using ability"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}

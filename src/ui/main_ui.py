@@ -12,7 +12,12 @@
 from dataclasses import dataclass, field, field
 from enum import Enum
 from typing import List, Dict, Any, Optional, Callable, Tuple
+import textwrap
+
 import tcod
+import tcod.console
+import tcod.context
+import tcod.tileset
 import tcod.event
 from abc import ABC, abstractmethod
 
@@ -68,10 +73,10 @@ class StatusData:
 class UIConfig:
     """Configuration for the UI system."""
 
-    width: int = 80
-    height: int = 40
-    screen_width: int = 80  # Keep both for compatibility
-    screen_height: int = 40
+    width: int = 120  # Larger width for more detailed display
+    height: int = 50  # Larger height for more content
+    screen_width: int = 120  # Keep both for compatibility
+    screen_height: int = 50
     border_style: str = "double"
     show_timestamps: bool = False
     border_char_horizontal: str = "═"
@@ -85,11 +90,15 @@ class UIConfig:
     border_char_junction_l: str = "╠"
     border_char_junction_r: str = "╣"
     status_height: int = 3
-    menu_height: int = 4
-    main_area_color: Tuple[int, int, int] = (255, 255, 255)
-    border_color: Tuple[int, int, int] = (128, 128, 128)
-    menu_color: Tuple[int, int, int] = (200, 200, 255)
-    status_color: Tuple[int, int, int] = (255, 255, 200)
+    menu_height: int = 5  # Increased to 5 to accommodate the "More Options" line
+    main_area_color: Tuple[int, int, int] = (
+        255,
+        255,
+        255,
+    )  # Bright white for main text
+    border_color: Tuple[int, int, int] = (180, 180, 180)  # Brighter gray for borders
+    menu_color: Tuple[int, int, int] = (220, 220, 255)  # Brighter blue for menus
+    status_color: Tuple[int, int, int] = (255, 255, 160)  # Brighter yellow for status
 
     def __post_init__(self):
         """Sync width/height with screen_width/screen_height."""
@@ -140,9 +149,46 @@ class MenuScreen:
             self.description = description
             self.status = status
 
+        # Expandable menu support
+        self.menu_page = 0
+        self.max_visible_options = 9  # Show 1-9, use 0 for next page
+        self.all_options = self.options.copy() if self.options else []
+
+        # Update visible options
+        self._update_visible_options()
+
+    def _update_visible_options(self) -> None:
+        """Update visible options based on current page."""
+        start_idx = self.menu_page * self.max_visible_options
+        end_idx = start_idx + self.max_visible_options
+
+        # Get options for this page
+        page_options = self.all_options[start_idx:end_idx]
+
+        # Reassign keys 1-9 for this page
+        for i, option in enumerate(page_options):
+            option.key = str(i + 1)
+
+        # Add "next page" option if there are more options
+        if end_idx < len(self.all_options):
+            next_page_option = MenuOption(
+                "0", f"More Options... (Page {self.menu_page + 2})", "next_menu_page"
+            )
+            page_options.append(next_page_option)
+
+        self.options = page_options
+
+    def next_menu_page(self) -> None:
+        """Go to the next page of menu options."""
+        max_page = (len(self.all_options) - 1) // self.max_visible_options
+        if self.menu_page < max_page:
+            self.menu_page += 1
+            self._update_visible_options()
+
     def add_option(self, option: MenuOption) -> None:
         """Add a menu option to this screen."""
-        self.options.append(option)
+        self.all_options.append(option)
+        self._update_visible_options()
 
     def add_content_line(self, line: str) -> None:
         """Add a line of content to the main text area."""
@@ -195,9 +241,9 @@ class InputHandler:
         """Handle keydown events."""
         key_sym = event.sym
 
-        # Handle number keys (1-9)
-        if tcod.event.K_1 <= key_sym <= tcod.event.K_9:
-            number = str(key_sym - tcod.event.K_0)
+        # Handle number keys (0-9)
+        if tcod.event.KeySym.N0 <= key_sym <= tcod.event.KeySym.N9:
+            number = str(key_sym - tcod.event.KeySym.N0)
             return f"menu_option_{number}"
 
         # Handle escape
@@ -229,35 +275,94 @@ class MainUI:
         self.config = config or UIConfig()
         self.console: Optional[tcod.Console] = None
         self.context: Optional[tcod.context.Context] = None
-        self.current_screen: Optional[MenuScreen] = None
         self.status_data = StatusData()
         self.input_handler = InputHandler()
         self.running = True
         self.current_state = ScreenState.MAIN_MENU
+        self.should_exit = False
+
+        # Import here to avoid circular imports
+        from src.ui.main_menu_screen import MainMenuScreen
+
+        self.current_screen: Optional[MenuScreen] = MainMenuScreen(self)
 
         Log.p("MainUI", ["UI framework initialized"])
 
     def initialize(self) -> None:
-        """Initialize the tcod console and context."""
-        # Create console
-        self.console = tcod.Console(self.config.screen_width, self.config.screen_height)
-
-        # Create context
-        tileset = None
-        if self._font_exists():
-            tileset = tcod.tileset.load_tilesheet(
-                "data/fonts/terminal.png", 32, 8, tcod.tileset.CHARMAP_CP437
-            )
-
-        self.context = tcod.context.new_terminal(
-            self.config.screen_width,
-            self.config.screen_height,
-            tileset=tileset,
-            title="Broken Divinity - ASCII Roguelike",
-            vsync=True,
+        """Initialize the tcod console and context for graphical display."""
+        Log.p(
+            "MainUI",
+            [
+                f"Initializing {self.config.screen_width}x{self.config.screen_height} graphical window..."
+            ],
         )
 
-        Log.p("MainUI", ["Console and context initialized"])
+        # Create console using new API
+        self.console = tcod.console.Console(
+            self.config.screen_width, self.config.screen_height
+        )
+
+        try:
+            # Try to load a built-in truetype font for better graphics and readability
+            tileset = None
+
+            # Try to use a system monospace font with larger size for better readability
+            try:
+                tileset = tcod.tileset.load_truetype_font(
+                    "DejaVuSansMono-Bold.ttf",  # Use bold variant for better visibility
+                    0,
+                    18,  # Increased font size for better readability
+                )
+                Log.p("MainUI", ["Loaded DejaVu Sans Mono Bold font"])
+            except:
+                try:
+                    # Fallback to regular DejaVu Sans Mono but larger
+                    tileset = tcod.tileset.load_truetype_font(
+                        "DejaVuSansMono.ttf",
+                        0,
+                        18,  # Increased font size
+                    )
+                    Log.p("MainUI", ["Loaded DejaVu Sans Mono font (regular)"])
+                except:
+                    try:
+                        # Fallback to another common font
+                        tileset = tcod.tileset.load_truetype_font(
+                            "LiberationMono-Bold.ttf",
+                            0,
+                            18,
+                        )
+                        Log.p("MainUI", ["Loaded Liberation Mono Bold font"])
+                    except:
+                        try:
+                            # Try regular Liberation Mono
+                            tileset = tcod.tileset.load_truetype_font(
+                                "LiberationMono-Regular.ttf",
+                                0,
+                                18,
+                            )
+                            Log.p("MainUI", ["Loaded Liberation Mono font"])
+                        except:
+                            # Final fallback - no tileset (use default)
+                            tileset = None
+                            Log.p("MainUI", ["Using default font"])
+
+            # Create graphical context
+            self.context = tcod.context.new(
+                columns=self.config.screen_width,
+                rows=self.config.screen_height,
+                tileset=tileset,
+                title="🎮 Broken Divinity - ASCII Roguelike",
+                vsync=True,
+            )
+            Log.p("MainUI", ["Graphical window created successfully"])
+
+        except Exception as e:
+            Log.p("MainUI", [f"Graphics initialization failed: {e}"])
+            # Fall back to text mode
+            self._run_text_mode()
+            return
+
+        Log.p("MainUI", ["Console and context initialized for graphical display"])
 
     def _font_exists(self) -> bool:
         """Check if custom font file exists."""
@@ -272,6 +377,10 @@ class MainUI:
         """Set the current screen to display."""
         self.current_screen = screen
         Log.p("MainUI", [f"Screen changed to: {screen.title}"])
+
+    def change_screen(self, screen: MenuScreen) -> None:
+        """Change to a new screen (alias for set_screen)."""
+        self.set_screen(screen)
 
     def push_screen(self, screen: MenuScreen) -> None:
         """Push a new screen onto the screen stack."""
@@ -293,8 +402,70 @@ class MainUI:
         """Update the status bar data."""
         self.status_data = status_data
 
+    def update_dynamic_status(self) -> None:
+        """Update status with dynamic information like current location and time."""
+        if not self.status_data:
+            return
+
+        # Update location based on current screen
+        if self.current_screen:
+            new_location = self._get_location_from_screen(self.current_screen.title)
+            if new_location != self.status_data.location:
+                self.status_data.location = new_location
+
+        # Update time (increment by 1 minute each render for now)
+        self._increment_time()
+
+    def _get_location_from_screen(self, screen_title: str) -> str:
+        """Get location name based on current screen title."""
+        location_map = {
+            "Broken Divinity - Main Menu": "Detective Bureau",
+            "Character Creation": "Detective Bureau - Personnel",
+            "Character Background Selection": "Detective Bureau - Personnel",
+            "Detective Apartment": "Your Apartment",
+            "Combat": "Crime Scene",
+            "Exploration": "Investigation Site",
+            "Investigation": "Investigation Site",
+            "Equipment": "Equipment Room",
+            "Inventory": "Equipment Room",
+        }
+
+        for key, location in location_map.items():
+            if key in screen_title:
+                return location
+
+        return "Unknown Location"
+
+    def _increment_time(self) -> None:
+        """Increment game time by small amounts."""
+        if not self.status_data.time:
+            self.status_data.time = "08:00"
+            return
+
+        try:
+            # Parse current time
+            hours, minutes = map(int, self.status_data.time.split(":"))
+
+            # Increment by 1 minute (you can adjust this)
+            minutes += 1
+            if minutes >= 60:
+                minutes = 0
+                hours += 1
+                if hours >= 24:
+                    hours = 0
+                    self.status_data.day += 1
+
+            # Format back to string
+            self.status_data.time = f"{hours:02d}:{minutes:02d}"
+        except (ValueError, AttributeError):
+            # If parsing fails, reset to default
+            self.status_data.time = "08:00"
+
     def render(self) -> None:
         """Render the current UI state to the console."""
+        # Update dynamic status information
+        self.update_dynamic_status()
+
         if not self.console:
             # Fallback for testing: render to print
             self._render_to_print()
@@ -487,13 +658,16 @@ class MainUI:
 
         # Render description if present
         if self.current_screen.description:
-            self.console.print(
-                2,
-                y_offset,
-                self.current_screen.description,
-                fg=self.config.main_area_color,
+            # Use text wrapping for description
+            wrapped_lines = textwrap.wrap(
+                self.current_screen.description, width=self.config.screen_width - 4
             )
-            y_offset += 2
+            for i, line in enumerate(wrapped_lines):
+                if y_offset + i < end_y - 1:
+                    self.console.print(
+                        2, y_offset + i, line, fg=self.config.main_area_color
+                    )
+            y_offset += len(wrapped_lines) + 1
 
         # Render content lines
         for i, line in enumerate(self.current_screen.content_lines):
@@ -512,7 +686,9 @@ class MainUI:
         # Arrange options in 3 columns
         col_width = (self.config.screen_width - 4) // 3
 
-        for i, option in enumerate(self.current_screen.options[:9]):  # Max 9 options
+        for i, option in enumerate(
+            self.current_screen.options
+        ):  # Iterate through all visible options
             if not option.enabled:
                 continue
 
@@ -638,6 +814,20 @@ class MainUI:
                         "screen": self.current_screen.title,
                     },
                 )
+
+                # Route action to current screen handler
+                if option.action == "next_menu_page":
+                    self.current_screen.next_menu_page()
+                elif hasattr(self.current_screen, "handle_action"):
+                    self.current_screen.handle_action(option.action)
+                else:
+                    Log.p(
+                        "MainUI",
+                        [
+                            f"Screen {self.current_screen.title} has no handle_action method"
+                        ],
+                    )
+
                 return True
 
         # Handle other actions
@@ -662,6 +852,12 @@ class MainUI:
         if not self.context:
             self.initialize()
 
+        # If context is still None after initialization, run in text mode
+        if not self.context:
+            Log.p("MainUI", ["Running in text-only mode (no graphics context)"])
+            self._run_text_mode()
+            return
+
         Log.p("MainUI", ["Starting main UI loop"])
 
         while self.running:
@@ -672,6 +868,53 @@ class MainUI:
                 self.process_action(action)
 
         Log.p("MainUI", ["Main UI loop ended"])
+
+    def _run_text_mode(self) -> None:
+        """Run the game in text-only mode for terminal display."""
+        print("\n" + "=" * 60)
+        print("🎮 BROKEN DIVINITY - ASCII ROGUELIKE")
+        print("=" * 60)
+
+        try:
+            while self.running and not self.should_exit:
+                # Clear screen and show current screen
+                print("\n" * 2)  # Add some spacing
+
+                if self.current_screen:
+                    # Display screen title
+                    print(f"📍 {self.current_screen.title}")
+                    print("-" * len(self.current_screen.title))
+
+                    # Display menu options
+                    if (
+                        hasattr(self.current_screen, "options")
+                        and self.current_screen.options
+                    ):
+                        print("\nAvailable Actions:")
+                        for i, option in enumerate(self.current_screen.options, 1):
+                            status = "✓" if option.enabled else "✗"
+                            print(f"  {i}. {status} {option.text}")
+
+                    # Display status if available
+                    if self.status_data:
+                        print(
+                            f"\n📊 Status: {self.status_data.location} | "
+                            f"HP: {self.status_data.hp}/{self.status_data.max_hp} | "
+                            f"Gold: {self.status_data.gold}"
+                        )
+
+                print(f"\n💬 Game running in text mode. Press Ctrl+C to exit.")
+                print(f"⏳ Main menu system is active...")
+
+                # Simple sleep loop with exit check
+                import time
+
+                time.sleep(2)
+
+        except KeyboardInterrupt:
+            Log.p("MainUI", ["Game interrupted by user"])
+            print("\n🔚 Game ended by user. Thanks for playing!")
+            self.running = False
 
     def shutdown(self) -> None:
         """Clean shutdown of the UI system."""

@@ -11,19 +11,21 @@ Scene-driven ASCII supernatural mystery with tactical combat, set in a post-apoc
 - **Warsim-Style UI**: Numbered options (1-9) for all menus, clean ASCII borders
 - **Test-First Development**: Implement features incrementally, always maintaining green tests
 
-## Current Status: v0.0.10 - Combat System Foundation Complete ✅
-**Solid Technical Foundation Built**
-- ✅ Signal Bus Foundation (17 tests passing)
-- ✅ StateRegistry - Status effects system (13 tests passing) 
-- ✅ BuffRegistry - Positive effects system (14 tests passing)
-- ✅ EntityRegistry - Creatures and stats (14 tests passing)
-- ✅ AbilityRegistry - Detective abilities (17 tests passing)
-- ✅ SuffixRegistry - Procedural generation (12/13 tests passing)
-- ✅ MainUI Framework - Professional interface (22 tests passing)
-- ✅ Basic Combat Engine - Turn-based tactical system (34 tests passing)
-- ✅ Infernal Combat System - Imp enemy with infernal abilities
-- ✅ **183/190 tests passing, game boots with professional UI**
-- 🎯 **NEXT**: Hop 11 - Scene 1: Apartment Exploration
+## Current Status: v0.0.12 - SQLite Data Layer Foundation Complete ✅  
+**SQLite-First Development Workflow Established**
+- ✅ Complete SQLite database schema with 6 core tables + relationships
+- ✅ JSON to SQLite migration system with comprehensive validation
+- ✅ Data backend abstraction layer supporting both JSON and SQLite
+- ✅ Database manager with backup, validation, and error handling
+- ✅ Enhanced VS Code tasks for database management workflow
+- ✅ **37/38 tests passing, SQLite foundation 99% complete**
+- 🎯 **NEXT**: Hop 13 - Registry SQLite Integration
+
+**New Development Methodology:**
+- **SQLite Database** (`data/game.db`) - Primary data store for production
+- **JSON Test Data** (`data/test_data/`) - Development and testing files  
+- **Migration Tools** - Promote tested JSON content to database
+- **Backend Abstraction** - Unified Registry API for both data sources
 
 ---
 
@@ -44,24 +46,77 @@ Detective Morrison awakens in his apartment 3 days after Yahweh's assassination.
 
 ## SCENE-DRIVEN DEVELOPMENT PHASES
 
-## PHASE 1: THE AWAKENING (Hops 11-16)
+## PHASE 1: THE AWAKENING (Hops 11-18)
 *"Detective Morrison's First Day in the New World"*
 
-### Hop 11: Scene 1 - Apartment Exploration ⚙️ **IN PROGRESS**
-**Tutorial Environment & Equipment System**
-- Apartment location with item examination
-- Equipment slot system (weapon, armor, badge)
-- S&W Model 10 revolver acquisition (.357 damage type)
-- Old leather jacket equipment (+2 defense)
-- Detective badge (enables resurrection mechanic)
-- Hungover status effect (-1 to all stats, 2 hour duration)
+### Hop 11: Scene 1 - Apartment Exploration ✅ **COMPLETE**
+**Player wakes up hungover in their apartment with basic items to examine.**
 
-**New Systems Required:**
-- Equipment Registry with slot management
-- Item interaction system 
-- Location-based exploration screens
-- Status effect with duration tracking
-- Damage type system (.357 revolver rounds)
+### Hop 12: SQLite Data Layer Foundation ✅ **COMPLETE**
+**Establish SQLite database as primary data store with JSON compatibility.**
+- ✅ SQLite database schema with 6 core tables (entities, abilities, etc.)
+- ✅ JSON to SQLite migration system with validation
+- ✅ Data backend abstraction (unified API for JSON/SQLite)
+- ✅ Database manager with backup and error handling
+- ✅ VS Code tasks for database workflow management
+- ✅ Comprehensive test suite (37/38 tests passing)
+
+### Hop 13: Registry SQLite Integration 🎯 **CURRENT TARGET**
+**Update existing registries to use SQLite backend with JSON fallback.**
+
+**Development Status**: 14/14 apartment tests passing, fully functional
+- ✅ ApartmentLocation class with 4 examinable items (revolver, jacket, badge, bottle)
+- ✅ CharacterState with status effect persistence outside combat  
+- ✅ Enhanced StateRegistry with stat_changes and duration tracking
+- ✅ ApartmentScreen UI with 9 menu options integrated with MainUI
+- ✅ Item examination system with detailed descriptions
+- ✅ Status effects persist outside combat (hungover: -1 all stats, 2 hours)
+- ✅ Game boots successfully, apartment exploration fully playable
+
+**Technical Implementation**:
+- ✅ src/game/locations.py - LocationItem dataclass, ApartmentLocation
+- ✅ src/game/character_state.py - CharacterState with StateRegistry integration
+- ✅ src/ui/apartment_screen.py - ApartmentScreen with menu actions
+- ✅ Enhanced status effect JSON standardization
+- ✅ JSON schema validation system implemented
+
+**Story Elements**: Morrison wakes up 3 days after divine assassination, discovers personal items, feels effects of drinking. Sets up character's detective background and current state.
+
+**Player Experience**: Examine 4 items, experience persistent status effects, navigate apartment with intuitive numbered menu options.
+
+### Hop 12: Main Menu System with Character Creation ⚙️ **NEXT UP**
+**Professional main menu as game entry point with character creation workflow.**
+
+**Development Focus**:
+- 🎯 Main menu system as game entry point (not apartment)
+- 🎯 Character creation with background flavor options (Detective, Survivor, etc.)
+- 🎯 Integration with existing MainUI framework and MenuScreen
+- 🎯 Character background affects starting stats/items/abilities
+- 🎯 Save/load system for character persistence
+- 🎯 Settings menu with game options
+
+**Enhanced Workflow Requirements**:
+- ⚙️ JSON validation passes before development (Step 2)
+- ⚙️ Character creation schema and templates created
+- ⚙️ Test-first implementation with 100% green tests
+- ⚙️ Manual player experience testing required
+- ⚙️ Documentation updated with character system
+
+**Technical Implementation**:
+- 🎯 src/game/character_creation.py - Character creation system
+- 🎯 src/ui/main_menu_screen.py - Main menu as entry point
+- 🎯 data/character_backgrounds/ - Background definitions
+- 🎯 Enhanced save/load for character persistence
+- 🎯 Integration with existing MainUI MenuScreen framework
+
+**Story Elements**: Player creates Detective Morrison's background, personalizing their approach to the investigation. Background choices affect starting equipment, abilities, and relationships.
+
+**Player Experience**: Smooth main menu → character creation → apartment entry flow. Players feel ownership over their character's background and capabilities.
+
+### Hop 13: First Combat Encounter
+- Persistent status effects (outside combat duration)
+- Basic item description system
+- Story progression state tracking
 
 **Apartment Layout**
 ```
@@ -87,66 +142,111 @@ Detective Morrison awakens in his apartment 3 days after Yahweh's assassination.
 
 **Success Criteria**
 - [ ] Apartment location renders with examination options
-- [ ] Equipment system functional (weapon/armor/badge slots)
-- [ ] S&W Model 10 provides .357 damage type attacks
-- [ ] Leather jacket gives +2 defense when equipped
-- [ ] Hungover status affects stats temporarily
-- [ ] All equipment tests passing
+- [ ] Basic item examination functional (descriptions only)
+- [ ] S&W Model 10 discovered (.38 caliber physical damage concept)
+- [ ] Leather jacket examined (+2 defense concept)
+- [ ] Hungover status persists outside combat
+- [ ] MainUI exploration system working
 
-### Hop 12: Scene 2 - First Combat Encounter
-**Alley Tactical Combat Introduction**
-- Downtown alley location with thug encounter
-- Enhanced combat screen showing equipped items
-- .357 revolver attacks vs basic physical
-- Defense calculations with armor
-- Turn-based tactical positioning
+### Hop 12: Scene 2 - Multi-Enemy Combat Encounter
+**Enhanced Tactical Combat with Multiple Foes**
+- Downtown alley location with complex encounter
+- 2x Imp enemies + 1x Dona Margarita (mini-boss)
+- Turn order with multiple enemies
+- Group tactics and targeting
+- Enhanced combat UI for multi-enemy battles
 - Victory/defeat/flee outcomes
 
 **Combat Enhancement Requirements:**
-- Damage type effectiveness system
-- Equipment stat integration in combat
-- Enhanced combat UI showing gear
-- Tactical positioning basics
-- Ammo tracking for revolver
+- Multi-enemy battle system
+- Enhanced targeting mechanics
+- Group initiative calculations
+- Dona Margarita boss entity
+- Complex battle UI layouts
 
 **Alley Combat Layout**
 ```
 ╔═══════════════════════════════════════════════════════════════════════════════╗
-║ COMBAT: Downtown Alley     Turn: 2     Morrison vs Street Thug              ║
+║ COMBAT: Downtown Alley     Turn: 3     Morrison vs Demonic Forces           ║
 ╠═══════════════════════════════════════════════════════════════════════════════╣
-║ Morrison [HP: 18/20] [Ammo: 5/6]        Thug [HP: 8/15] [Bleeding]         ║
-║ Equipment: S&W Model 10 + Leather Jacket                                    ║
-║                                                                               ║
-║ > Morrison fires .357 round for 8 damage! Critical hit!                     ║
-║ > Thug takes 2 bleeding damage from wound                                   ║
-║ > Thug swings knife wildly, blocked by leather jacket!                     ║
+║ Morrison [HP: 18/20] [MP: 10/10]        Imp1 [HP: 12/12] [Ready]            ║
+║ Status: Hungover (-1 all stats)         Imp2 [HP: 10/12] [Bleeding]         ║
+║                                         Dona Margarita [HP: 25/25] [Boss]   ║
+║ > Morrison fires .38 round at Imp2 for 6 damage!                           ║
+║ > Imp1 casts Infernal Bolt at Morrison for 4 damage!                       ║
+║ > Dona Margarita prepares devastating attack...                             ║
 ║                                                                               ║
 ╠═══════════════════════════════════════════════════════════════════════════════╣
-║ 1. Fire Revolver       4. Reload Weapon     7. Check Equipment             ║
-║ 2. Aimed Shot          5. Take Cover        8. Attempt Flee                ║
-║ 3. Pistol Whip         6. Examine Enemy     9. Combat Options              ║
+║ 1. Target Imp1         4. Use Ability       7. Check Enemies               ║
+║ 2. Target Imp2         5. Take Cover        8. Attempt Flee                ║
+║ 3. Target Margarita    6. Defend            9. Combat Options              ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
 ```
 
 **Success Criteria**
-- [ ] Combat screen displays equipment effects
-- [ ] .357 damage type properly calculated
-- [ ] Armor provides actual damage reduction
-- [ ] Ammo tracking functional during combat
-- [ ] Combat AI responds to player equipment
+- [ ] Multi-enemy combat system functional
+- [ ] Turn order handles 4 entities correctly
+- [ ] Targeting system works for multiple enemies
+- [ ] Dona Margarita boss mechanics working
+- [ ] Complex combat UI displays clearly
 
-### Hop 13: Scene 3 - Divine Revelation (Cutscene)
+### Hop 13: Scene 3 - The Unwinnable Angel Battle
+**Maddened Angel Encounter (Story Beat)**
+- Post-victory, overwhelming enemy appears
+- Maddened Angel entity (unbeatable boss)
+- Scripted defeat after limited turns
+- Introduces resurrection mechanic naturally
+- Sets up divine power system
+- Story exposition through combat
+
+**Angel Encounter Systems:**
+- Unbeatable enemy mechanics
+- Scripted battle progression
+- Death/resurrection trigger
+- Divine power introduction
+- Story-driven combat pacing
+
+**Angel Battle Layout**
+```
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║ DIVINE COMBAT: Maddened Angel     Turn: 2     Morrison vs Divine Wrath      ║
+╠═══════════════════════════════════════════════════════════════════════════════╣
+║ Morrison [HP: 5/20] [MP: 2/10]          Maddened Angel [HP: ???/???]       ║
+║ Status: Terrified, Bleeding             Status: Divine Fury, Untouchable    ║
+║                                                                               ║
+║ The angel's presence burns your soul. Its six wings blaze with holy fire.   ║
+║ Your .38 rounds bounce harmlessly off its divine form.                      ║
+║ "MORTAL. YOUR TIME HAS ENDED."                                              ║
+║                                                                               ║
+║ > Morrison fires desperately - no effect!                                   ║
+║ > Angel raises sword of pure light...                                       ║
+║                                                                               ║
+╠═══════════════════════════════════════════════════════════════════════════════╣
+║ 1. Fire Again          4. Pray             7. Last Words                    ║
+║ 2. Run (Impossible)     5. Cower           8. Face Death                    ║
+║ 3. Take Cover          6. Look for Exit    9. Accept Fate                   ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+```
+
+**Success Criteria**
+- [ ] Angel encounter triggers after demon victory
+- [ ] Unbeatable combat mechanics functional
+- [ ] Scripted defeat after 2-3 turns
+- [ ] Death triggers resurrection system
+- [ ] Story progression advances correctly
+
+### Hop 14: Scene 4 - Divine Revelation (Cutscene)
 **Lucifer's Blessing System**
-- Post-combat cutscene implementation
+- Post-resurrection cutscene implementation
 - Lucifer entity introduction (non-combat)
-- Blessing buff system (.blessing damage type)
+- Blessing buff system (.blessing damage subcategory)
 - Resurrection badge activation
 - Divine power mechanics explanation
 - Story exposition integration
 
 **Divine Systems Required:**
 - Cutscene system with non-interactive dialogue
-- Blessing damage type and mechanics
+- Blessing damage subcategory
 - Badge-triggered resurrection system
 - Divine entity templates
 - Story progression tracking
@@ -176,10 +276,10 @@ Detective Morrison awakens in his apartment 3 days after Yahweh's assassination.
 - [ ] Cutscene system displays non-interactive dialogue
 - [ ] Blessing buff automatically applied (+2 to all stats)
 - [ ] Badge becomes resurrection anchor (functional system)
-- [ ] .blessing damage type available for detective abilities
+- [ ] .blessing damage subcategory available for detective abilities
 - [ ] Story state progression tracking
 
-### Hop 14: Scene 4 - New Babylon Foundation
+### Hop 15: Scene 5 - New Babylon Foundation
 **Basic Colony Management Introduction**
 - Settlement screen with basic buildings
 - Resource tracking (survivors, materials, food)
@@ -224,7 +324,31 @@ Detective Morrison awakens in his apartment 3 days after Yahweh's assassination.
 - [ ] Population management working
 - [ ] Economic basics operational
 
-### Hop 15: Tutorial Integration & Polish
+### Hop 16: Equipment Registry & Advanced Systems
+**Complex Equipment and Damage Type Systems**
+- Equipment Registry implementation (6th registry)
+- Damage Type Registry for ballistic subcategories
+- Full inventory system with equipment slots
+- Advanced weapon variations using suffix system
+- Ammo tracking and reload mechanics
+- Equipment stat integration in all systems
+
+**Advanced Systems Required:**
+- Equipment Registry with slot management
+- Damage Type Registry (.38, .357, .45, etc.)
+- Full inventory UI and management
+- Equipment-combat integration
+- Suffix-based weapon generation
+- Advanced item mechanics
+
+**Success Criteria**
+- [ ] Equipment Registry operational
+- [ ] Damage Type Registry with ballistic subcategories
+- [ ] Full equipment slot system functional
+- [ ] Weapon variations generated via suffix system
+- [ ] Advanced combat-equipment integration
+
+### Hop 17: Tutorial Integration & Polish
 **Seamless Scene Transitions**
 - Smooth progression between all tutorial scenes
 - Tutorial hints and guidance system
@@ -246,7 +370,7 @@ Detective Morrison awakens in his apartment 3 days after Yahweh's assassination.
 - [ ] Performance acceptable across all scenes
 - [ ] No major bugs in tutorial sequence
 
-### Hop 16: Phase 1 Completion Testing
+### Hop 18: Phase 1 Completion Testing
 **Full Tutorial Validation**
 - End-to-end testing of complete tutorial sequence
 - Performance benchmarking with all systems active
@@ -270,10 +394,10 @@ Detective Morrison awakens in his apartment 3 days after Yahweh's assassination.
 
 ---
 
-## PHASE 2: THE INVESTIGATION (Hops 17-25)
+## PHASE 2: THE INVESTIGATION (Hops 19-27)
 *"Building the Case Against Divine Killers"*
 
-### Hop 17-19: Evidence System & Case Building
+### Hop 19-21: Evidence System & Case Building
 **Systematic Investigation Mechanics**
 - Evidence collection and analysis
 - Witness interview system
@@ -281,7 +405,7 @@ Detective Morrison awakens in his apartment 3 days after Yahweh's assassination.
 - Case file management
 - Investigation skill progression
 
-### Hop 20-22: Multiple Crime Scenes  
+### Hop 22-24: Multiple Crime Scenes  
 **Expanding the Mystery**
 - Additional location types
 - Procedural evidence generation
@@ -289,7 +413,7 @@ Detective Morrison awakens in his apartment 3 days after Yahweh's assassination.
 - Suspect tracking system
 - Red herring mechanics
 
-### Hop 23-25: Advanced Investigation Features
+### Hop 25-27: Advanced Investigation Features
 **Professional Detective Work**
 - Forensic analysis mini-games
 - Interrogation dialogue trees
@@ -299,10 +423,10 @@ Detective Morrison awakens in his apartment 3 days after Yahweh's assassination.
 
 ---
 
-## PHASE 3: COLONY EXPANSION (Hops 26-35)
+## PHASE 3: COLONY EXPANSION (Hops 28-37)
 *"Building New Babylon into a Thriving Community"*
 
-### Hop 26-30: Advanced Colony Management
+### Hop 28-32: Advanced Colony Management
 **Complex Settlement Systems**
 - Advanced building types and upgrades
 - Resource production chains
@@ -310,7 +434,7 @@ Detective Morrison awakens in his apartment 3 days after Yahweh's assassination.
 - Trade and diplomacy systems
 - Threat management (raids, disasters)
 
-### Hop 31-35: Regional Expansion
+### Hop 33-37: Regional Expansion
 **Beyond New Babylon**
 - Multiple settlement management
 - Regional exploration and claiming
@@ -320,10 +444,10 @@ Detective Morrison awakens in his apartment 3 days after Yahweh's assassination.
 
 ---
 
-## PHASE 4: EPIC CONCLUSION (Hops 36-45)
+## PHASE 4: EPIC CONCLUSION (Hops 38-47)
 *"The Truth Behind Yahweh's Murder"*
 
-### Hop 36-40: Divine Conspiracy
+### Hop 38-42: Divine Conspiracy
 **Uncovering the Truth**
 - Divine entity encounters
 - Cosmic-scale investigation
@@ -331,7 +455,7 @@ Detective Morrison awakens in his apartment 3 days after Yahweh's assassination.
 - Divine combat mechanics
 - Reality-altering consequences
 
-### Hop 41-45: Final Confrontations & Polish
+### Hop 43-47: Final Confrontations & Polish
 **Epic Climax & Game Completion**
 - Final boss encounters
 - Multiple victory conditions

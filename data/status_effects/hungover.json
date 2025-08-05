@@ -1,0 +1,19 @@
+{
+  "id": "hungover",
+  "name": "hungover",
+  "display_name": "Hungover", 
+  "description": "Pounding headache and poor coordination from last night's drinking. All stats reduced.",
+  "effect_type": "debuff",
+  "default_duration": 120,
+  "duration_hours": 2,
+  "duration_minutes": 0,
+  "max_stacks": 1,
+  "conflicts": [],
+  "stat_changes": {
+    "attack": -1,
+    "defense": -1,
+    "speed": -1
+  },
+  "damage_over_time": 0,
+  "removable": true
+}

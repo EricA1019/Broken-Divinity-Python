@@ -221,32 +221,13 @@ def main() -> NoReturn:
 
         Log.p("Main", ["Game systems initialized successfully"])
 
-        # Initialize Main UI Framework (Hop 8 Complete!)
+        # Initialize Main UI Framework with new main menu
         Log.p("Main", ["Initializing Main UI Framework..."])
         ui = MainUI()
         ui.initialize()
 
-        # Create a sample menu screen to demonstrate the UI
-        main_menu = MenuScreen(
-            title="Broken Divinity - Main Menu",
-            options=[
-                MenuOption("1", "New Investigation", "new_game"),
-                MenuOption(
-                    "2",
-                    "Continue Case",
-                    "load_game",
-                    enabled=False,
-                    disabled_reason="No save file found",
-                ),
-                MenuOption("3", "Case Files", "case_files"),
-                MenuOption("4", "Detective Stats", "character_sheet"),
-                MenuOption("5", "Evidence Locker", "inventory"),
-                MenuOption("6", "Options", "settings"),
-                MenuOption("7", "Credits", "credits"),
-                MenuOption("8", "Exit", "quit_game"),
-            ],
-            description="Welcome to the streets of Neo-Babylon, Detective. Choose your next move.",
-        )
+        # Main menu is already set as the entry point in MainUI
+        Log.p("Main", ["Main menu loaded as entry point"])
 
         # Set up sample status data
         status = StatusData(
@@ -262,7 +243,6 @@ def main() -> NoReturn:
         )
 
         ui.update_status(status)
-        ui.set_screen(main_menu)
 
         Log.p("Main", ["UI Framework ready - launching main UI loop"])
 

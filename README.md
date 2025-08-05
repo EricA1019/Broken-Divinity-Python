@@ -1,48 +1,48 @@
-# Broken Divinity - ASCII Roguelike
+# Broken Divinity - ASCII Detective Adventure
 
-A classic turn-based ASCII roguelike implementation of Broken Divinity, built with Python and tcod. Experience tactical combat in a procedurally generated world where only the detective has immunity from permadeath.
+A menu-driven ASCII supernatural mystery game where Detective Morrison investigates divine murders in post-apocalyptic New Babylon. Built with Python 3.11+ using the "Close-to-Shore" development methodology for reliable, data-driven gameplay.
 
 ## 🎯 Core Features
 
-- **Turn-Based Combat**: Strategic, speed-based initiative system
-- **Procedural Dungeons**: Room-based encounters with varied challenges
-- **Entity Variants**: Dynamic prefix/suffix modifiers for enemies, NPCs, and loot
-- **Data-Driven Design**: JSON-based content with YAML/TOML configuration
-- **Detective Immunity**: Unique permadeath mechanics
-- **Unicode Display**: Rich terminal graphics with fallback compatibility
+- **Menu-Driven Exploration**: Navigate via numbered selections (1-9), no direct movement
+- **Data-Driven Design**: All content in JSON files with automatic discovery systems
+- **Detective Investigation**: Piece together clues to solve supernatural murders
+- **Status Effect System**: Complex buff/debuff mechanics with duration tracking
+- **Character Progression**: Skill development and equipment management
+- **Tactical Combat**: Turn-based encounters with F/D/I/A controls
+- **Rich ASCII Interface**: Professional UI with tcod rendering
 
-## 🔧 Tech Stack
+## 🏗️ Enhanced Architecture
 
-- **python-tcod**: Rendering, field-of-view, pathfinding
-- **asciimatics**: Modal UI widgets and menus
-- **pytest**: Comprehensive testing framework
-- **JSON**: Game data (entities, abilities, items)
-- **YAML/TOML**: Configuration and settings
-
-## 🏗️ Project Structure
+Built using the "Close-to-Shore" methodology with comprehensive testing:
 
 ```
 broken_divinity_proto/
 ├── src/                    # Core game code
-│   ├── game/              # Game logic (entities, combat, dungeons)
-│   ├── ui/                # User interface (console, menus)
-│   └── utils/             # Utilities (logging, loaders)
+│   ├── game/              # Game logic (entities, state, locations)
+│   ├── ui/                # User interface (menus, screens, layout)
+│   ├── core/              # Core systems (registries, signals)
+│   └── utils/             # Utilities (logging, helpers)
 ├── data/                  # Game content (JSON files)
-│   ├── entities/          # Character definitions
-│   ├── variants/          # Prefix/suffix modifiers
-│   ├── abilities/         # Spell and skill definitions
-│   └── items/             # Equipment and consumables
-├── tests/                 # Test suite
-├── config/                # Settings and configuration
-├── Documentation/         # Project documentation
-└── .vscode/              # VS Code workspace configuration
+│   ├── entities/          # Character and NPC definitions
+│   ├── abilities/         # Detective skills and powers
+│   ├── locations/         # Exploration areas and items
+│   └── modifiers/         # Procedural generation data
+├── tests/                 # Comprehensive test suite
+│   ├── unit/              # Component isolation tests
+│   ├── integration/       # System interaction tests
+│   ├── smoke/             # End-to-end critical path tests
+│   └── game_flow/         # Complete player journey tests
+├── docs/                  # Documentation
+│   └── playtests/         # Manual testing reports
+└── schemas/               # JSON validation schemas
 ```
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Python 3.8+
+- Python 3.11+
 - VS Code (recommended)
 
 ### Installation
@@ -58,42 +58,79 @@ broken_divinity_proto/
 
 3. Install dependencies:
    ```bash
-   pip install python-tcod asciimatics pytest pyyaml
+   make install
+   # or manually:
+   pip install -e .[dev]
    ```
 
-4. Run tests:
+4. Run the enhanced test suite:
    ```bash
-   python -m pytest -v
+   make test-all
    ```
 
-5. Start the game:
+5. Validate the installation:
    ```bash
+   make validate-boot
+   ```
+
+6. Start the game:
+   ```bash
+   make run
+   # or
    python -m src.main
    ```
 
 ## 🎮 Controls
 
-- **Arrow Keys**: Movement
+- **Numbered Keys (1-9)**: Menu navigation and selection
+- **0**: Next page (when available)
 - **F**: Fight
 - **D**: Defend  
-- **I**: Inventory
+- **I**: Inventory/Inspect
 - **A**: Abilities
 - **ESC**: Back/Exit
 
-## 🧪 Testing
+## 🧪 Enhanced Testing Strategy
 
-The project follows Test-Driven Development with comprehensive coverage:
+The project uses a comprehensive multi-layered testing approach:
+
+### Test Categories
 
 ```bash
-# Run all tests
-python -m pytest -v
+# Individual test categories
+make test-unit          # Component isolation tests
+make test-integration   # System interaction tests  
+make test-smoke         # End-to-end critical paths
+make test-game-flow     # Complete player journeys
 
-# Run specific test file
-python -m pytest tests/test_entities.py -v
+# Validation commands
+make validate-schemas   # JSON schema validation
+make validate-boot      # Game startup test
+make validate-data      # All data file checks
 
-# Run with coverage
-python -m pytest --cov=src tests/
+# Workflow commands
+make test-pre-commit    # Full automated suite
+make test-hop-complete  # Everything + manual validation
+make test-debug         # Run with verbose output
 ```
+
+### VS Code Integration
+
+Use `Ctrl+Shift+P` and search for:
+- "Tasks: Test: All" - Run complete test suite
+- "Tasks: Test: Unit" - Run unit tests only
+- "Tasks: Validate: Boot Test" - Quick game validation
+- "Tasks: Run Game" - Start the game
+
+### Player-Driven Testing
+
+Each development hop includes mandatory manual testing:
+1. Feature functionality validation
+2. User experience assessment  
+3. Story progression verification
+4. Performance and stability check
+
+Results are documented in `docs/playtests/hop_X_playtest.md`
 
 ## 📖 Documentation
 

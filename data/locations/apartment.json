@@ -1,0 +1,70 @@
+{
+    "name": "Morrison's Apartment",
+    "initial_description": "Morrison's shabby one-room apartment. The morning light filters through dirty windows, illuminating dust motes and empty bottles. Your detective badge and service revolver wait on the table. Time to get back to work. Select an action to explore the apartment:",
+    "explorable_items": {
+        "revolver": {
+            "text": "Examine Revolver",
+            "description": "Your old service revolver, a Smith & Wesson Model 10. It feels heavy and familiar in your hand. Six rounds in the cylinder. You haven't had to use it in a while, and you hope that streak continues."
+        },
+        "jacket": {
+            "text": "Get Jacket",
+            "description": "A worn leather jacket. It's seen better days, but it's comfortable and offers a bit of protection. You find a crumpled pack of cigarettes and a lighter in the pocket."
+        },
+        "notes": {
+            "text": "Read Notes",
+            "description": "Scattered Case Notes: 'First day back on duty. Chief wants all detectives to check in this morning. Multiple investigation requests have been coming in overnight. People in the city seem on edge, lots of unusual reports. Need to get back to work and see what cases need attention. The coffee will help clear the head and focus on the job.'"
+        },
+        "badge": {
+            "text": "Check Badge",
+            "description": "Your detective badge, tarnished and scratched. It still carries the weight of the law. A reminder of the job you have to do, and the person you're supposed to be."
+        },
+        "water": {
+            "text": "Drink Water",
+            "description": "You drink a glass of lukewarm water from the tap. It helps with the pounding in your head, but doesn't do much for the bitter taste in your mouth."
+        },
+        "mirror": {
+            "text": "Check Mirror",
+            "description": "You look at your reflection in the cracked bathroom mirror. You look tired. The lines on your face seem deeper today. You need a shave, but that can wait."
+        },
+        "search_room": {
+            "text": "Search Room",
+            "description": "You give the room a quick once-over. It's a mess of clothes, case files, and empty take-out containers. Nothing of immediate interest stands out. Just the usual chaos of your life."
+        },
+        "look_outside": {
+            "text": "Look Outside",
+            "description": "You look out the grimy window to the street below. The city is waking up. People are heading to work, their faces a mixture of hope and despair. Just another day in the city of angels and demons."
+        },
+        "desk": {
+            "text": "Examine Desk",
+            "description": "A cheap wooden desk, covered in case files, empty coffee mugs, and an overflowing ashtray. A half-finished report for a routine burglary case sits under a lamp. Tucked in a corner is a framed photo of a woman, face down. You don't have the heart to turn it over."
+        },
+        "under_bed": {
+            "text": "Look Under Bed",
+            "description": "A collection of dust bunnies, a lost sock, and an old, forgotten case file. The file is labeled 'The Silent Choir' - a cold case from years ago. The details are hazy, but you remember it was unsettling. Best leave it for now."
+        },
+        "window_lock": {
+            "text": "Check Window Lock",
+            "description": "The window latch is old and rusted, but firmly locked. A few scratches on the frame suggest someone might have tried to pry it open recently. Or maybe that was just you, on a night you'd rather forget."
+        },
+        "stain": {
+            "text": "Inspect Strange Stain",
+            "description": "A dark, rust-colored stain on the wooden floorboards near the desk. It's mostly faded, but a faint coppery smell lingers. It could be old rust, or something more sinister. Without a testing kit, it's hard to be sure."
+        },
+        "answering_machine": {
+            "text": "Check Answering Machine",
+            "description": "The red light on the answering machine is blinking. One new message. You press play: 'Morrison, it's the Chief. We have a situation. A bad one. Get down to the precinct as soon as you can. Don't be late.' His voice sounds strained."
+        },
+        "bookshelf": {
+            "text": "Inspect Bookshelf",
+            "description": "A small, dusty bookshelf filled with pulp detective novels and police procedure manuals. One book, 'The Metaphysics of Crime,' has a heavily dog-eared page. It describes a ritualistic symbol, eerily similar to the one from your current case."
+        },
+        "photograph": {
+            "text": "Examine Old Photograph",
+            "description": "The photo you avoided looking at earlier. You turn it over. It's a picture of you and a smiling woman, taken on a sunny day at the beach. Her name was Sarah. The memory is a dull ache in your chest. Best not to dwell on it."
+        },
+        "leave": {
+            "text": "Leave Apartment",
+            "description": "You've seen enough. Time to face the day. You grab your keys and head for the door, the city's siren song calling to you. Ready to step outside and begin your investigation."
+        }
+    }
+}

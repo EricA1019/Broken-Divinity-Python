@@ -1,0 +1,16 @@
+{
+  "id": "example_status",
+  "name": "example_status",
+  "display_name": "Example Status",
+  "description": "Template for creating new status effects",
+  "effect_type": "debuff",
+  "duration_hours": 1,
+  "duration_minutes": 0,
+  "max_stacks": 1,
+  "conflicts": [],
+  "stat_changes": {
+    "attack": -1,
+    "defense": -1
+  },
+  "removable": true
+}

@@ -34,6 +34,12 @@ class Buff:
     max_stacks: int = 1
     buff_type: str = "temporary"  # "temporary" or "permanent"
     is_permanent: bool = False
+    display_name: str = ""  # Human-readable name for UI display
+    effect_type: str = "buff"  # Type of effect for categorization
+    duration: int = 0  # Alternative duration field for compatibility
+    stacks: bool = True  # Whether this buff can stack
+    conflicts: List[str] = field(default_factory=list)  # Conflicting buffs
+    visual_indicator: str = ""  # Icon or symbol for UI
 
     def __post_init__(self):
         """Post-initialization processing."""

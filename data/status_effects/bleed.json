@@ -1,6 +1,7 @@
 {
     "id": "bleed",
-    "name": "Bleeding",
+    "name": "bleed",
+    "display_name": "Bleeding",
     "description": "Taking damage over time",
     "default_duration": 3,
     "max_stacks": 5,

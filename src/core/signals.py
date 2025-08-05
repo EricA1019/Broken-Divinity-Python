@@ -22,6 +22,10 @@ class CoreSignal(Enum):
     REGISTRY_RELOADED = auto()
     REGISTRY_ERROR = auto()
 
+    # Database signals
+    DATABASE_INITIALIZED = auto()
+    DATABASE_ERROR = auto()
+
     # UI Signals
     UI_ACTION = "ui_action"
     UI_ACTION_SELECTED = "ui_action_selected"

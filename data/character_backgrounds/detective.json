@@ -1,0 +1,62 @@
+{
+  "id": "detective",
+  "name": "detective",
+  "display_name": "Detective",
+  "description": "A seasoned investigator with keen observation skills and a troubled past.",
+  "flavor_text": "You've walked the thin blue line for years, seeing the worst humanity has to offer. The divine assassination has shattered your worldview, but your investigative instincts remain sharp. Your badge may be tarnished, but your dedication to truth burns bright.",
+  "stat_modifiers": {
+    "perception": 2,
+    "intelligence": 1,
+    "charisma": 1,
+    "strength": -1
+  },
+  "starting_items": [
+    "detective_badge",
+    "service_revolver",
+    "leather_jacket",
+    "evidence_notebook"
+  ],
+  "starting_abilities": [
+    "examine_evidence",
+    "interrogate",
+    "quick_draw"
+  ],
+  "starting_status_effects": [
+    "hungover"
+  ],
+  "background_skills": [
+    {
+      "name": "Police Protocol",
+      "description": "Knowledge of law enforcement procedures and contacts",
+      "mechanical_effect": "Unlock special dialogue with authority figures"
+    },
+    {
+      "name": "Crime Scene Analysis",
+      "description": "Ability to read evidence and reconstruct events",
+      "mechanical_effect": "+2 to investigation checks"
+    }
+  ],
+  "personality_traits": [
+    "Cynical but caring",
+    "Methodical approach to problems", 
+    "Struggles with authority after divine crisis",
+    "Protective of innocent people"
+  ],
+  "dialogue_options": {
+    "investigation": [
+      "I need to see your identification.",
+      "Where were you on the night of the incident?",
+      "The evidence doesn't support your story."
+    ],
+    "social": [
+      "Trust me, I've seen worse.",
+      "Let me help you with this.",
+      "We need to work together to survive."
+    ],
+    "combat": [
+      "Drop your weapon and surrender!",
+      "I don't want to hurt you.",
+      "You're under arrest."
+    ]
+  }
+}

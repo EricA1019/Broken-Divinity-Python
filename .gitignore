@@ -73,6 +73,10 @@ save_games/
 *.log
 debug_output/
 
+# Testing
+scratch_tests/
+docs/playtests/hop_*_playtest.md
+
 # Temporary files
 *.tmp
 *.temp

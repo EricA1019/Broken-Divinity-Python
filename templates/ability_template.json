@@ -1,0 +1,19 @@
+{
+  "id": "example_ability",
+  "name": "Example Ability",
+  "description": "Template for creating new abilities",
+  "type": "attack",
+  "damage_type": "physical",
+  "cost": {
+    "mana": 2
+  },
+  "cooldown": 1,
+  "range": 1,
+  "targeting": "single",
+  "effects": {
+    "damage": {
+      "base": 5,
+      "dice": "1d6"
+    }
+  }
+}

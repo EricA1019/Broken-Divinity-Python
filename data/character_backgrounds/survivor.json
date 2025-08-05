@@ -1,0 +1,61 @@
+{
+  "id": "survivor",
+  "name": "survivor",
+  "display_name": "Survivor",
+  "description": "A resourceful individual who has learned to adapt and endure in the post-divine world.",
+  "flavor_text": "When the heavens fell, you were already living on the margins. Street smarts and raw determination kept you alive through the chaos. You know how to find food, shelter, and allies in the wasteland that used to be civilization.",
+  "stat_modifiers": {
+    "stamina": 2,
+    "dexterity": 2,
+    "strength": 1,
+    "intelligence": -1,
+    "charisma": -1
+  },
+  "starting_items": [
+    "survival_knife",
+    "makeshift_armor",
+    "emergency_rations",
+    "rope_bundle"
+  ],
+  "starting_abilities": [
+    "scavenge",
+    "improvised_weapon",
+    "endurance_boost"
+  ],
+  "starting_status_effects": [],
+  "background_skills": [
+    {
+      "name": "Urban Survival",
+      "description": "Knowledge of finding resources in ruins and wasteland",
+      "mechanical_effect": "Double items found when scavenging"
+    },
+    {
+      "name": "Danger Sense",
+      "description": "Instinct for avoiding trouble and detecting threats",
+      "mechanical_effect": "+1 to initiative, chance to detect ambushes"
+    }
+  ],
+  "personality_traits": [
+    "Pragmatic and cautious",
+    "Distrustful of authority",
+    "Values practical solutions",
+    "Loyal to proven allies"
+  ],
+  "dialogue_options": {
+    "investigation": [
+      "I've seen things like this before.",
+      "Check the shadows - that's where truth hides.",
+      "People lie, but their surroundings don't."
+    ],
+    "social": [
+      "We stick together or we die alone.",
+      "I know where to find what you need.",
+      "Trust is earned, not given."
+    ],
+    "combat": [
+      "I'll use whatever I can find.",
+      "You picked the wrong survivor to mess with.",
+      "I've survived worse than you."
+    ]
+  }
+}
