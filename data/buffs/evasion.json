@@ -1,0 +1,15 @@
+{
+  "id": "evasion",
+  "name": "evasion",
+  "display_name": "Evasive",
+  "description": "Increased chance to dodge attacks.",
+  "effect_type": "stat_modifier",
+  "stat_modifiers": {
+    "speed": 5,
+    "dodge_chance": 0.3
+  },
+  "duration": 2,
+  "stacks": false,
+  "conflicts": ["slow"],
+  "visual_indicator": "👤"
+}

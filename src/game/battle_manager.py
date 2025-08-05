@@ -134,6 +134,7 @@ class BattleManager:
         self.battle_result = BattleResult.ONGOING
 
         self.entity_registry = EntityRegistry()
+        self.entity_registry.initialize()  # Load entity data
         self.signal_bus = get_signal_bus()
 
         Log.p("BattleMgr", ["Battle manager initialized"])
@@ -231,13 +232,13 @@ class BattleManager:
         return CombatEntity(
             name=entity_data.name,
             entity_type=entity_data.entity_type,
-            max_hp=entity_data.hp,
-            current_hp=entity_data.hp,
-            max_mana=entity_data.mana,
-            current_mana=entity_data.mana,
-            attack=entity_data.attack,
-            defense=entity_data.defense,
-            speed=entity_data.speed,
+            max_hp=entity_data.base_health,
+            current_hp=entity_data.base_health,
+            max_mana=entity_data.base_mana,
+            current_mana=entity_data.base_mana,
+            attack=entity_data.base_attack,
+            defense=entity_data.base_defense,
+            speed=entity_data.base_speed,
         )
 
     def get_living_enemies(self) -> List[CombatEntity]:

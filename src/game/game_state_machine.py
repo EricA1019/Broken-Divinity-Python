@@ -414,14 +414,58 @@ class GameStateMachine:
         return screen
 
     def _create_combat_screen(self) -> MenuScreen:
-        """Create combat screen stub."""
-        status = StatusData(
-            location="Combat Encounter", time="Turn 1", hp=20, max_hp=20
-        )
+        """Create combat screen with live battle data if available."""
+        # Check if we have an active battle to display
+        from src.game.battle_manager import BattleManager
+
+        battle_mgr = BattleManager()
+
+        if battle_mgr.is_battle_active():
+            # Create screen with live battle data
+            player = battle_mgr.player
+            enemies = battle_mgr.get_living_enemies()
+
+            # Update status with player data
+            status = StatusData(
+                location="Combat: Live Battle",
+                time=f"Turn {1}",  # TODO: Get actual turn from turn manager
+                hp=player.current_hp if player else 20,
+                max_hp=player.max_hp if player else 20,
+                mana=player.current_mana if player else 0,
+                max_mana=player.max_mana if player else 0,
+            )
+
+            # Build description with live battle info
+            if player and enemies:
+                enemy_names = [e.name for e in enemies]
+                enemy_list = ", ".join(enemy_names)
+                description = f"⚔️ LIVE COMBAT: {player.name} vs {enemy_list}\n\n"
+                description += f"🧙 {player.name}: {player.current_hp}/{player.max_hp} HP, {player.current_mana}/{player.max_mana} MP\n"
+
+                for enemy in enemies:
+                    status_icon = "💀" if not enemy.is_alive() else "👹"
+                    description += f"{status_icon} {enemy.name}: {enemy.current_hp}/{enemy.max_hp} HP, {enemy.current_mana}/{enemy.max_mana} MP\n"
+
+                description += "\n🎯 Choose your action:"
+                title = f"Combat: {player.name} vs {enemy_list}"
+            else:
+                description = "Combat system ready - no active battle"
+                title = "Combat Encounter"
+        else:
+            # Fallback to demo mode
+            status = StatusData(
+                location="Combat Encounter", time="Turn 1", hp=20, max_hp=20
+            )
+            description = "Under Development - Combat System\n\nThis will be the turn-based combat interface featuring:\n• Initiative-based turn order\n• Detective abilities and equipment\n• Status effects and tactical decisions\n• Enemy AI and multiple encounter types"
+            title = "Combat Encounter"
 
         options = [
-            MenuOption("1", "Attack", "Basic attack", enabled=False),
-            MenuOption("2", "Defend", "Defensive stance", enabled=False),
+            MenuOption(
+                "1", "Attack", "Basic attack", enabled=battle_mgr.is_battle_active()
+            ),
+            MenuOption(
+                "2", "Defend", "Defensive stance", enabled=battle_mgr.is_battle_active()
+            ),
             MenuOption("3", "Take Cover", "Improve defense", enabled=False),
             MenuOption("4", "Use Ability", "Special abilities", enabled=False),
             MenuOption("5", "Use Item", "Consume items", enabled=False),
@@ -432,10 +476,7 @@ class GameStateMachine:
         ]
 
         screen = MenuScreen(
-            title="Combat Encounter",
-            description="Under Development - Combat System\n\nThis will be the turn-based combat interface featuring:\n• Initiative-based turn order\n• Detective abilities and equipment\n• Status effects and tactical decisions\n• Enemy AI and multiple encounter types",
-            options=options,
-            status=status,
+            title=title, description=description, options=options, status=status
         )
 
         return screen

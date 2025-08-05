@@ -1,0 +1,15 @@
+{
+  "id": "weakness",
+  "name": "weakness",
+  "display_name": "Weakened",
+  "description": "Defense reduced by dark magic.",
+  "effect_type": "stat_modifier",
+  "stat_modifiers": {
+    "defense": -2,
+    "attack": -1
+  },
+  "duration": 4,
+  "stacks": false,
+  "conflicts": ["blessing"],
+  "visual_indicator": "💀"
+}

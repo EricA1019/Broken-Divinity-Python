@@ -1,0 +1,30 @@
+{
+  "id": "imp",
+  "name": "Imp",
+  "description": "A small infernal creature with burning eyes and wicked claws. Known for using dark magic and cunning tactics.",
+  "entity_type": "enemy",
+  "base_health": 12,
+  "base_attack": 8,
+  "base_defense": 4,
+  "base_speed": 16,
+  "base_mana": 15,
+  "flee_chance": 0.1,
+  "is_boss": false,
+  "is_elite": false,
+  "immunities": [],
+  "resistances": ["fire", "dark"],
+  "vulnerabilities": ["holy"],
+  "abilities": ["infernal_bolt", "shadow_step", "minor_curse"],
+  "ai_behavior": {
+    "aggression": 0.7,
+    "spell_preference": 0.6,
+    "flee_threshold": 0.2
+  },
+  "loot_table": {
+    "common": ["small_gem", "imp_claw"],
+    "uncommon": ["sulfur_crystal"],
+    "rare": ["infernal_essence"]
+  },
+  "experience_value": 25,
+  "threat_level": 2
+}

@@ -1,0 +1,17 @@
+{
+  "id": "infernal_bolt",
+  "name": "Infernal Bolt",
+  "description": "A crackling bolt of dark energy that burns the target.",
+  "type": "attack",
+  "damage_type": "infernal",
+  "cost": {
+    "mana": 3
+  },
+  "cooldown": 0,
+  "range": 3,
+  "targeting": "single",
+  "effects": {
+    "base_damage": [4, 8],
+    "status_effects": ["burn"]
+  }
+}
